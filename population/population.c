@@ -24,7 +24,7 @@ int main(void)
         age = (age + (age / 3) - (age / 4));
         count++;
     }
-    printf("Years: %i /n", count);
+    printf("Years: %i \n", count);
     // TODO: Prompt for end size
 
     // TODO: Calculate number of years until we reach threshold
