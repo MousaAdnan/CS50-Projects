@@ -7,7 +7,8 @@ int main(void)
     int n = 0;
     while (n < height)
     {
-        printf("# \n");
+        printf("#");
         n++;
     }
+    printf("\n");
 }
