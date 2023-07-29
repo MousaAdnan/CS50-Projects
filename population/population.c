@@ -7,7 +7,7 @@ int main(void)
     int age;
     do
     {
-    age = get_int("What is the starting population size? ");
+        age = get_int("What is the starting population size? ");
     }
     while (age < 9);
 
@@ -21,7 +21,7 @@ int main(void)
 
     // TODO: Calculate number of years until we reach threshold
     int count = 0;
-    while(age < endAge)
+    while (age < endAge)
     {
         age = (age + (age / 3) - (age / 4));
         count++;
