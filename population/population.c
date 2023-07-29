@@ -10,7 +10,8 @@ int main(void)
     age = get_int("What is the starting population size? ");
     }
     while (age < 9);
-
+    
+    // TODO: Prompt for end size
     int endAge;
     do
     {
@@ -18,16 +19,14 @@ int main(void)
     }
     while (endAge <= age);
 
+    // TODO: Calculate number of years until we reach threshold
     int count = 0;
     while(age < endAge)
     {
         age = (age + (age / 3) - (age / 4));
         count++;
     }
-    printf("Years: %i \n", count);
-    // TODO: Prompt for end size
-
-    // TODO: Calculate number of years until we reach threshold
 
     // TODO: Print number of years
+    printf("Years: %i \n", count);
 }
