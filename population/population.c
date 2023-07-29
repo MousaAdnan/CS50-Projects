@@ -22,7 +22,7 @@ int main(void)
     {
         age = (age + (age / 3) - (age / 4));
     }
-    printf(int age);
+    printf("%i/n", age);
     // TODO: Prompt for end size
 
     // TODO: Calculate number of years until we reach threshold
