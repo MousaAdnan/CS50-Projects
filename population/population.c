@@ -10,6 +10,19 @@ int main(void)
     }
     while (age < 9);
 
+    int endAge;
+    do
+    {
+        endAge = get_int("What is the ending population size? ");
+    }
+    while (endAge >= age);
+
+    int n;
+    while (age < endAge)
+    {
+        age
+    }
+
     // TODO: Prompt for end size
 
     // TODO: Calculate number of years until we reach threshold
