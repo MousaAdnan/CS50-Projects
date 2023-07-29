@@ -18,7 +18,12 @@ int main(void)
     }
     while (endAge <= age);
 
-    printf("%i, %i\n", age, endAge);
+    int count = 0;
+    int years;
+    while(count < years)
+    {
+        
+    }
 
     // TODO: Prompt for end size
 
