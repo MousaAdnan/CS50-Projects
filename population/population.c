@@ -18,11 +18,13 @@ int main(void)
     }
     while (endAge <= age);
 
+    int count = 0;
     while(age < endAge)
     {
         age = (age + (age / 3) - (age / 4));
+        count++;
     }
-    printf("%i/n", age);
+    printf("Years: %i /n", count);
     // TODO: Prompt for end size
 
     // TODO: Calculate number of years until we reach threshold
