@@ -1,5 +1,4 @@
 #include <cs50.h>
-#include <stdio.h>
 
 int main(void)
 {
@@ -10,8 +9,6 @@ int main(void)
     age = get_int("What is the starting population size? ");
     }
     while (age < 9);
-
-    printf(age);
 
     // TODO: Prompt for end size
 
