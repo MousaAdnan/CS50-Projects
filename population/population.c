@@ -8,7 +8,7 @@ int main(void)
     {
     age = get_int("What is the starting population size? ");
     }
-    while (age < 9);
+    while (age <= 9);
 
     // TODO: Prompt for end size
 
