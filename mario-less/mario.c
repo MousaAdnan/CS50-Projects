@@ -4,19 +4,18 @@
 int main(void)
 {
     int height;
-    int row = 0;
+    int row ;
     int column;
     int gap;
-    
+
     do
     {
         height = get_int("How tall should it be? ");
     }
     while (height < 1 || height > 8);
 
-    while (row < height)
+    for (row = 0; row < height; row++)
     {
-        printf("#");
         for (gap = 0; gap < (height - row - 1); gap++)
         {
             printf(" ");
@@ -27,7 +26,6 @@ int main(void)
             printf("#");
         }
         printf("\n");
-        row++;
     }
 
 }
