@@ -4,16 +4,16 @@
 int main(void)
 {
     int height = get_int("How tall should it be? ");
-    int r = 0;
-    while (r < height)
+    int row = 0;
+    int column;
+    while (row < height)
     {
         printf("#");
-        r++;
-
-        for (column = 0; column <= r; column++)
+        for (column = 0; column <= row; column++)
         {
             printf("#");
         }
+        row++;
         printf("\n");
     }
 
