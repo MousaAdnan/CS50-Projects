@@ -9,12 +9,12 @@ int main(void)
     while (row < height)
     {
         printf("#");
-        for (column = 0; column <= row; column++)
+        for (column = 0; column < row; column++)
         {
             printf("#");
         }
-        row++;
         printf("\n");
+        row++;
     }
 
 }
