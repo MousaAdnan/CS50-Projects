@@ -10,7 +10,7 @@ int main(void)
     while (row < height)
     {
         printf("#");
-        for (gap = 0; gap < height; gap++)
+        for (gap = 0; gap < (height - row - 1); gap++)
         {
             printf(" ");
         }
