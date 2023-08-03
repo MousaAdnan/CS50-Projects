@@ -4,7 +4,7 @@
 int main(void)
 {
     int height;
-    int row ;
+    int row;
     int column;
     int gap;
 
@@ -27,5 +27,4 @@ int main(void)
         }
         printf("\n");
     }
-
 }
