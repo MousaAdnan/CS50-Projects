@@ -10,7 +10,10 @@ int main(void)
         printf("#");
         n++;
 
-        for (gap = 0; )
+        for (column = 0; column <= row; column++)
+        {
+            printf
+        }
         printf("\n");
     }
 
