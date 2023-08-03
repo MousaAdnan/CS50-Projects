@@ -3,10 +3,17 @@
 
 int main(void)
 {
-    int height = get_int("How tall should it be? ");
+    int height;
     int row = 0;
     int column;
     int gap;
+    
+    do
+    {
+        height = get_int("How tall should it be? ");
+    }
+    while (height < 1 || height > 8);
+
     while (row < height)
     {
         printf("#");
