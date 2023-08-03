@@ -9,6 +9,9 @@ int main(void)
     {
         printf("#");
         n++;
+
+        for (gap = 0; )
+        printf("\n");
     }
-    printf("\n");
+
 }
