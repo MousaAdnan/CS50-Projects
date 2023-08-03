@@ -14,6 +14,7 @@ int main(void)
         {
             printf(" ");
         }
+
         for (column = 0; column < row; column++)
         {
             printf("#");
