@@ -4,13 +4,13 @@
 int main(void)
 {
     int height = get_int("How tall should it be? ");
-    int n = 0;
-    while (n < height)
+    int r = 0;
+    while (r < height)
     {
         printf("#");
-        n++;
+        r++;
 
-        for (column = 0; column <= row; column++)
+        for (column = 0; column <= r; column++)
         {
             printf("#");
         }
