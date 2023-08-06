@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 string word;
 string newWord;
@@ -21,6 +22,6 @@ bool only_digits(string str)
 {
     while (strlen(newWord) < strlen(word))
     {
-        
+
     }
 }
