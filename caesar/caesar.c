@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 string word;
+string newWord;
 
 int main(int argc, string argv[])
 {
@@ -18,5 +19,8 @@ int main(int argc, string argv[])
 
 bool only_digits(string str)
 {
-    for (word )
+    while (strlen(newWord) < strlen(word))
+    {
+        
+    }
 }
