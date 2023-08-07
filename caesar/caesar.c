@@ -20,7 +20,7 @@ int main(int argc, string argv[])
                 string text = get_string("Plaintext: ");
                 for (int x = 0; x < strlen(text); x++)
                 {
-                    printf("%d", rotate(text[x], key));
+                    printf("%c", rotate(text[x], key));
                 }
                 printf("\n");
                 return 0;
@@ -61,6 +61,18 @@ char rotate(char c, int i)
     if (c >= 'a' && c <= 'z')
     {
         c += i;
+        if (c > 'z')
+        {
+            c -= 26;
+        }
+    }
+    else if (c >= 'A' && c <= 'Z')
+    {
+        c += i;
+        if (c > 'Z')
+        {
+            c -= 26;
+        }
     }
     return c;
 }
