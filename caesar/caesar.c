@@ -18,7 +18,7 @@ int main(int argc, string argv[])
             if (key >= 0 && key <= 9)
             {
                 return 0;
-
+                string text = get_string("Plaintext: ");
             }
             else
             {
@@ -53,7 +53,6 @@ bool only_digits(string str)
 
 char rotate(char c, int i)
 {
-    string text = get_string("Plaintext: ");
     for (int x = 0; x < strlen(text); x++)
     {
         printf()
