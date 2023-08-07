@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 bool only_digits(string str);
 int main(int argc, string argv[])
@@ -12,7 +13,7 @@ int main(int argc, string argv[])
     {
         if (only_digits(argv[1]) == true)
         {
-            if (key >=0 && key <=9)
+            if (key >= 0 && key <= 9)
             {
                 return 0;
             }
