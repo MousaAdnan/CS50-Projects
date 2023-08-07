@@ -18,7 +18,6 @@ int main(int argc, string argv[])
             printf("Usage: ./caesar key\n");
             return 1;
         }
-
     }
     else
     {
@@ -31,7 +30,7 @@ bool only_digits(string str)
 {
     for (int n = 0; str[n] != '\0'; n++)
     {
-        if (!isdigit(str[n]))
+        if (!isdigit(str[n]) && (str[n] < 0 || str[n] > 9))
         {
             return false;
         }
