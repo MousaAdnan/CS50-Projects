@@ -20,7 +20,7 @@ int main(int argc, string argv[])
                 string text = get_string("Plaintext: ");
                 for (int x = 0; x < strlen(text); x++)
                 {
-                    rotate(text[x], argv[1]);
+                    rotate(text[x], key);
                 }
                 return 0;
             }
@@ -57,5 +57,8 @@ bool only_digits(string str)
 
 char rotate(char c, int i)
 {
-    
+    if (c >= '97' && c <= 122)
+    {
+        c += i;
+    }
 }
