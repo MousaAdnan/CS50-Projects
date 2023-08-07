@@ -4,14 +4,23 @@
 #include <ctype.h>
 
 bool only_digits(string str);
-
 int main(int argc, string argv[])
 {
+    int key = atoi(argv[1]);
+
     if (argc == 2)
     {
         if (only_digits(argv[1]) == true)
         {
-            return 0;
+            if (key >=0 && key <=9)
+            {
+                return 0;
+            }
+            else
+            {
+                printf("Usage: ./caesar key\n");
+                return 1;
+            }
         }
         else
         {
