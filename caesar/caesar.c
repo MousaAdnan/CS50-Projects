@@ -11,37 +11,29 @@ int main(int argc, string argv[])
 {
     int key = atoi(argv[1]);
 
-    if (argc == 2)
+    if (argc != 2)
+    {
+        printf("Usage: ./caesar key\n");
+        return 1;
+    }
+    else
     {
         if (only_digits(argv[1]) == true)
         {
-            if (key >= 0 && key <= 9)
+            string text = get_string("plaintext: ");
+            printf("ciphertext: ");
+            for (int x = 0; x < strlen(text); x++)
             {
-                string text = get_string("plaintext: ");
-                printf("ciphertext: ");
-                for (int x = 0; x < strlen(text); x++)
-                {
-                    printf("%c", rotate(text[x], key));
-                }
-                printf("\n");
-                return 0;
+                printf("%c", rotate(text[x], key));
             }
-            else
-            {
-                printf("Usage: ./caesar key\n");
-                return 1;
-            }
+            printf("\n");
+            return 0;
         }
         else
         {
             printf("Usage: ./caesar key\n");
             return 1;
         }
-    }
-    else
-    {
-        printf("Usage: ./caesar key\n");
-        return 1;
     }
 }
 
