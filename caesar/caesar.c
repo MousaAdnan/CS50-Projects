@@ -13,6 +13,8 @@ int main(int argc, string argv[])
         printf("Usage: ./caesar key\n");
         return 1;
     }
+
+    only_digits(argv[1]);
 }
 
 bool only_digits(string str)
@@ -24,5 +26,7 @@ bool only_digits(string str)
     else
     {
         return false;
+        printf("Usage: ./caesar key\n");
+        return 1;
     }
 }
