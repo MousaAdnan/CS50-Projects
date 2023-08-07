@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-string word;
-string newWord;
-
 int main(int argc, string argv[])
 {
     if (argc == 2)
@@ -20,8 +17,12 @@ int main(int argc, string argv[])
 
 bool only_digits(string str)
 {
-    while (strlen(newWord) < strlen(word))
+    if (((int) str >= 0) && ((int) str <= 9))
     {
-
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
