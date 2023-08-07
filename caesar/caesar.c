@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+bool only_digits(string str);
+
 int main(int argc, string argv[])
 {
     if (argc == 2)
@@ -19,7 +21,7 @@ int main(int argc, string argv[])
 
 bool only_digits(string str)
 {
-    if (((int) str >= 0) && ((int) str <= 9))
+    if (((char) str >= 0) && ((char) str <= 9))
     {
         return true;
     }
