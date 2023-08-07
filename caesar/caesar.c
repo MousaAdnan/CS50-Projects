@@ -18,6 +18,7 @@ int main(int argc, string argv[])
             if (key >= 0 && key <= 9)
             {
                 string text = get_string("Plaintext: ");
+                printf("Ciphertext: ");
                 for (int x = 0; x < strlen(text); x++)
                 {
                     printf("%c", rotate(text[x], key));
