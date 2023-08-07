@@ -54,13 +54,13 @@ char rotate(char c, int i)
     if (c >= 'a' && c <= 'z')
     {
         c -= 'a';
-        c = ;
+        c = (c + i) % 26;
         c += 'a';
     }
     else if (c >= 'A' && c <= 'Z')
     {
         c -= 'A';
-        c += i;
+        c = (c + i) % 26;
         c += 'A';
     }
     return c;
