@@ -51,10 +51,3 @@ bool only_digits(string str)
     return true;
 }
 
-char rotate(char c, int i)
-{
-    for (int x = 0; x < strlen(text); x++)
-    {
-        printf()
-    }
-}
