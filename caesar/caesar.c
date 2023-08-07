@@ -19,7 +19,7 @@ int main(int argc, string argv[])
         if (only_digits(argv[1]) == true)
         {
             int key = atoi(argv[1]);
-            
+
             string text = get_string("plaintext: ");
             printf("ciphertext: ");
             for (int x = 0; x < strlen(text); x++)
@@ -53,19 +53,15 @@ char rotate(char c, int i)
 {
     if (c >= 'a' && c <= 'z')
     {
-        c += i;
-        if (c > 'z')
-        {
-            c -= 26;
-        }
+        c -= 'a';
+        c = ;
+        c += 'a';
     }
     else if (c >= 'A' && c <= 'Z')
     {
+        c -= 'A';
         c += i;
-        if (c > 'Z')
-        {
-            c -= 26;
-        }
+        c += 'A';
     }
     return c;
 }
