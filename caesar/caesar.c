@@ -9,8 +9,6 @@ char rotate(char c, int i);
 
 int main(int argc, string argv[])
 {
-    int key = atoi(argv[1]);
-
     if (argc != 2)
     {
         printf("Usage: ./caesar key\n");
@@ -20,6 +18,8 @@ int main(int argc, string argv[])
     {
         if (only_digits(argv[1]) == true)
         {
+            int key = atoi(argv[1]);
+            
             string text = get_string("plaintext: ");
             printf("ciphertext: ");
             for (int x = 0; x < strlen(text); x++)
