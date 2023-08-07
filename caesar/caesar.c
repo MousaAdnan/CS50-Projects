@@ -22,6 +22,7 @@ int main(int argc, string argv[])
                 {
                     rotate(text[x], key);
                 }
+                printf("\n");
                 return 0;
             }
             else
@@ -57,8 +58,9 @@ bool only_digits(string str)
 
 char rotate(char c, int i)
 {
-    if (c >= '97' && c <= 122)
+    if (c >= 'a' && c <= 'z')
     {
         c += i;
     }
+    return c;
 }
