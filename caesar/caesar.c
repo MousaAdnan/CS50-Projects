@@ -9,27 +9,32 @@ int main(int argc, string argv[])
 {
     if (argc == 2)
     {
-        return 0;
+        if (only_digits(argv[1]) == true)
+        {
+            return 0;
+        }
+        else
+        {
+            printf("Usage: ./caesar key\n");
+            return 1;
+        }
+
     }
     else
     {
         printf("Usage: ./caesar key\n");
         return 1;
     }
-
-    only_digits(argv[1]);
 }
 
 bool only_digits(string str)
 {
-    if (((char) str >= 0) && ((char) str <= 9))
+    for (int n = 0; str[n] != '\0'; n++)
     {
-        return true;
+        if (!isdigit(str[n]))
+        {
+            return false;
+        }
     }
-    else
-    {
-        return false;
-        printf("Usage: ./caesar key\n");
-        return 1;
-    }
+    return true;
 }
