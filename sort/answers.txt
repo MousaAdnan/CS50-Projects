@@ -1,11 +1,11 @@
-sort1 uses: TODO
+sort1 uses: 0.398
 
 How do you know?: TODO
 
-sort2 uses: TODO
+sort2 uses: Merge Sort 0.083
 
 How do you know?: TODO
 
-sort3 uses: TODO
+sort3 uses: 0.173
 
 How do you know?: TODO
