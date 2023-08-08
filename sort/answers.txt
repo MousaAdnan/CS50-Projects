@@ -1,11 +1,12 @@
-sort1 uses: 0.398
+sort1 uses: Bubble Sort - 0.0313 random time - 0.063 sorted timecheck50 cs50/labs/2023/x/sort
 
-How do you know?: TODO
 
-sort2 uses: Merge Sort 0.083
+How do you know?: Because Bubble sort is the fastest sorting algorithm to check a sorted list. Since this had the shortest time when sorting sorted10000.txt, it has to be bubble sort.
 
-How do you know?: TODO
+sort2 uses: Merge Sort - 0.083 randtom time - 0.090 sorted time
 
-sort3 uses: 0.173
+How do you know?: Because Merge sort is the fastest sorting algorithm to check a random list. Since this had the shortest time when sorting random10000.txt, it has to be merge sort.
 
-How do you know?: TODO
+sort3 uses: Selection sort - 0.173 random time - 0.181 sorted time
+
+How do you know?: Because Selection  sort is the slowing sorting algorithm to check a sorted or random list. Since this had the longest time when sorting sorted10000.txt and random10000.txt, it has to be selection sort.
