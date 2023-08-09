@@ -142,8 +142,21 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    // TODO
-    return;
+    int candidate;
+
+    // Add vote to non-eliminated top ranked candidate
+    for (int i = 0; i < voter_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            candidate = preferences[i][j];
+            if (!candidates[candidate].eliminated)
+            {
+                candidates[candidate].votes++;
+                break;
+            }
+        }
+    }
 }
 
 // Print the winner of the election, if there is one
