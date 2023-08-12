@@ -206,6 +206,12 @@ bool is_tie(int min)
 // Eliminate the candidate (or candidates) in last place
 void eliminate(int min)
 {
-    
+    for (int n = 0; n < candidate_count; n++)
+    {
+        if (candidates[n].votes == voter_count)
+        {
+            candidates[n].eliminated = true;
+        }
+    }
     return;
 }
