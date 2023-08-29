@@ -1,4 +1,5 @@
 #include "helpers.h"
+#include <math.h>
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
@@ -89,7 +90,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int n = 0; n < width; n++)
         {
-            temp[i][n] = image[i][n];
+            temporary[i][n] = image[i][n];
         }
     }
 
@@ -97,10 +98,49 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int n = 0; n < width; n++)
         {
-            int allRed = 0;
-            int allGreen = 0;
-            int allBlue = 0;
-            
+            float allRed = 0;
+            float allGreen = 0;
+            float allBlue = 0;
+            float counter = 0;
+
+            for (int p = -1; p < 2; p++)
+            {
+                for (int m = -1; m < 2; m++)
+                {
+                    if (i + p < 0 || i + p > height - 1)
+                    {
+                        continue;
+                    }
+
+                    if (n + m < 0 || n + m > width - 1)
+                    {
+                        continue;
+                    }
+
+                    allRed += image[i + p][n + m].rgbtRed;
+                    allBlue += image[i + p][n + m].rgbtBlue;
+                    allGreen += image[i + p][n + m].rgbtGreen;
+                    counter++;
+                }
+            }
+
+            temporary[i][n].rgbtBlue = round(allBlue / counter);
+            temporary[i][n].rgbtGreen = round(allGreen / counter);
+            temporary[i][n].rgbtRed = round(allRed / counter);
+        }
+    }
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            image[i][n].rgbtBlue = temp[i][j].rgbtBlue;
+            image[i][n].rgbtGreen = temp[i][j].rgbtGreen;
+            image[i][n].rgbtRed = temp[i][j].rgbtRed;
+        }
+
+    }
+
         }
     }
     return;
