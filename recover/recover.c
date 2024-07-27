@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include 
+#include <stdint.h>
+#include <stdbool.h>
 
 #define BLOCK_SIZE 512
 #define JPEG_SIGNATURE_1 0xff
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     }
 
     byte_t buffer[BLOCK_SIZE];
-    FILE img = NULL;
+    FILE *img = NULL;
     int img_count = 0;
     bool in_jpeg = false;
     char filename[8];
