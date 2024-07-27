@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 int getCents(void);
-int numOfQuarters(cents);
-int numOfDimes(cents);
-int numOfNickels(cents);
-int numOfPennies(cents);
+int numOfQuarters(int cents);
+int numOfDimes(int cents);
+int numOfNickels(int cents);
+int numOfPennies(int cents);
 
 int main(void)
 {
@@ -53,7 +53,7 @@ int numOfDimes(int cents)
 int numOfNickels(int cents)
 {
     int nickels = cents / 5;
-    return nickets;
+    return nickels;
 }
 
 int numOfPennies(int cents)
