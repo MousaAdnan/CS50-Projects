@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     while (fread(buffer, sizeof(byte_t), BLOCK_SIZE, file) == BLOCK_SIZE)
     {
-        if (buffer[0] == JPEG_SIGNATURE_1 && buffer[1] == JPEG_SIGNATURE_2 && buffer[2] == JPEG_SIGNATURE_3 && (buffer[3] >= JPEG_SIGNATURE_4_Start && buffer[3] <= JPEG_SIGNATURE_4_END))
+        if (buffer[0] == JPEG_SIGNATURE_1 && buffer[1] == JPEG_SIGNATURE_2 && buffer[2] == JPEG_SIGNATURE_3 && (buffer[3] >= JPEG_SIGNATURE_4_START && buffer[3] <= JPEG_SIGNATURE_4_END))
         {
             if (in_jpeg)
             {
