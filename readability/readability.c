@@ -40,6 +40,17 @@ int main(void)
         }
     }
 
+    if (inWord)
+    {
+        words++;
+    }
+
+    if (words == 0)
+    {
+        printf("Before Grade 1\n");
+        return 0;
+    }
+
     double L = (double) letters/ words * 100;
     double S = (double) sentences / words * 100;
 
