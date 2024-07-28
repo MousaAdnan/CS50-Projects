@@ -21,10 +21,21 @@ const unsigned int N = 10000;
 // Hash table
 node *table[N];
 
+unsigned int word_count = 0;
+
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
     // TODO
+    unsigned int index = hash(word);
+
+    for (nod *cursor = table[index]; cursor != NULL; cursor = cursor->next)
+    {
+        if (strcasecmp(word, cursor->word) == 0)
+        {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -32,7 +43,14 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
-    return toupper(word[0]) - 'A';
+    unsigned long hash = 5381;
+    int c;
+    while ((c = *word++))
+    {
+        hash = ((hash << 5) + hash) + tolower(c);
+    }
+
+    return hash % N:
 }
 
 // Loads dictionary into memory, returning true if successful, else false
