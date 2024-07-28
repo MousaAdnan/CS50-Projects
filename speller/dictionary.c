@@ -29,7 +29,7 @@ bool check(const char *word)
     // TODO
     unsigned int index = hash(word);
 
-    for (nod *cursor = table[index]; cursor != NULL; cursor = cursor->next)
+    for (node *cursor = table[index]; cursor != NULL; cursor = cursor->next)
     {
         if (strcasecmp(word, cursor->word) == 0)
         {
@@ -57,19 +57,57 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // TODO
-    return false;
+    FILE *file = fopen(dictionary, "r");
+    if (!file)
+    {
+        return false;
+    }
+
+    char word[LENGTH + 1];
+
+    while (fscanf(file, "%45s", word) != E0F)
+    {
+        node *new_node = malloc(sizeof(node));
+        if (!new_node)
+        {
+            fclose(file);
+            return false;
+        }
+
+        strcpy(nwe_node->word, word);
+
+        unsigned int index = hash(word);
+
+        new_node->next = table[index];
+        table[index] = new_node;
+
+        word_count++;
+    }
+    fclose(file);
+
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
     // TODO
-    return 0;
+    return word_count;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
     // TODO
-    return false;
+    for(int n = 0; n < N; i++)
+    {
+        node *cursor = table[i];
+        while (cursor != NULL)
+        {
+            node *temp = cursor;
+            cursor = cursor->next;
+            free(temp);
+        }
+    }
+    return true;
 }
