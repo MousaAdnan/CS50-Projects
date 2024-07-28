@@ -1,0 +1,9 @@
+Q: If songs.db contains the top 100 songs of one listener from 2018, how would you characterize their audio aura?
+
+The aura of the listener can be characterized by analyzing the details and attributes like danceability, energy, valence, tempo and duration of their top 100 songs.
+We can average these values and thatll tell us the preferences in terms of their overall mood.
+
+Q: Hypothesize about why the way you’ve calculated this aura might not be very representative of the listener. What better ways of calculating this aura would you propose?
+
+It might not be representative because it averages the attributes of only the top 100 songs from one year.
+It's potentially missing out on variations in the listeners listening habits throughout the year or across different years.
