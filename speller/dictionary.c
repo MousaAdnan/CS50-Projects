@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cs50.h>
 #include <string.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -50,7 +52,7 @@ unsigned int hash(const char *word)
         hash = ((hash << 5) + hash) + tolower(c);
     }
 
-    return hash % N:
+    return hash % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -65,7 +67,7 @@ bool load(const char *dictionary)
 
     char word[LENGTH + 1];
 
-    while (fscanf(file, "%45s", word) != E0F)
+    while (fscanf(file, "%45s", word) != EOF)
     {
         node *new_node = malloc(sizeof(node));
         if (!new_node)
@@ -74,7 +76,7 @@ bool load(const char *dictionary)
             return false;
         }
 
-        strcpy(nwe_node->word, word);
+        strcpy(new_node->word, word);
 
         unsigned int index = hash(word);
 
@@ -99,9 +101,9 @@ unsigned int size(void)
 bool unload(void)
 {
     // TODO
-    for(int n = 0; n < N; i++)
+    for(int n = 0; n < N; n++)
     {
-        node *cursor = table[i];
+        node *cursor = table[n];
         while (cursor != NULL)
         {
             node *temp = cursor;
