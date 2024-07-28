@@ -1,13 +1,13 @@
 def get_height():
     while True:
         try:
-            height = int(input("Height: ))
+            height = int(input("Height: "))
             if 1<= height <= 8:
                 return height
             else:
                 print("Please enter an integer between 1 and 8.")
         except ValueError:
-            print("Invalid input.)
+            print("Invalid input.")
 
 def print_pyramid(height):
     for i in range(1, height + 1):
