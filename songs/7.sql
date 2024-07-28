@@ -1,3 +1,4 @@
-SELECT name
+SELECT AVG(songs.energy) AS average_energy
 FROM songs
-WHERE name LIKE '%feat.%';
+JOIN artists ON songs.artist_id = artists.id
+WHERE artists.name = 'Drake';
