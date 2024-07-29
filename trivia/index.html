@@ -7,6 +7,47 @@
         <title>Trivia!</title>
         <script>
             // TODO: Add code to check answers to questions
+            function checkMultipleChoice(answer)
+            {
+                let correctAnswer = "C";
+                let resultText = document.getElementById("mc-result");
+
+                if (answer === correctAnswer)
+                {
+                    document.getElementById("btnA").style.backgroundColor = "red";
+                    document.getElementById("btnB").style.backgroundColor = "red";
+                    document.getElementById("btnC").style.backgroundColor = "green";
+                    resultText.innerHTML = "Correct!";
+                    resultText.className = "correct";
+                }
+                else
+                {
+                    document.getElementById("btn" + answer).style.backgroundColor = "red";
+                    resultText.innerHTML = "Incorrect";
+                    resultText.classsName = "incorrect";
+                }
+            }
+
+            function checkFreeResponse()
+            {
+                let correctAnswer = "42";
+                let userAnswer = document.getElementById("free-response-input").value.trim();
+                let resultText = document.getElementById("fr-result");
+
+                if (userAnswer ===correctAnswer)
+            {
+                document.getElementById("free-response-input").style.backgroundColor = "green";
+                resultText.innerHTML = "Correct!";
+                resultText.className = "correct";
+
+            }
+            else
+            {
+                document.getElementById("free-response-input").style.backgroundColor = "red";
+                resultText.innerHTML = "Incorrect";
+                resultText.className = "incorrect";
+            }
+            }
         </script>
     </head>
     <body>
@@ -19,12 +60,22 @@
                 <h2>Part 1: Multiple Choice </h2>
                 <hr>
                 <!-- TODO: Add multiple choice question here -->
+
+                <h3> What is the capital of France?</h3>
+                <button id = "btnA" onclick = "checkMultipleChoice('A')">A. Berlin</button>
+                <button id = "btnB" onclick = "checkMultipleChoice('B')">B. Madrid</button>
+                <button id = "btnC" onclick = "checkMultipleChoice('C')">C. Paris</button>
+                <p id="mc-result"></p>
             </div>
 
             <div class="section">
                 <h2>Part 2: Free Response</h2>
                 <hr>
                 <!-- TODO: Add free response question here -->
+                 <h3>What is the meaning of life?</h3>
+                 <input id="free-response-input" type="text">
+                 <button onclick = "checkFreeResponse()">Submit</button>
+                 <p id = "fr-result"></p>
             </div>
         </div>
     </body>
