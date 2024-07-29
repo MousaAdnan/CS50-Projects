@@ -17,3 +17,9 @@ background-color
 color
 margin-bottom
 text-align
+
+JavaScript:
+Added a simple alert on the homepage.
+
+Bootstrap:
+Integrated Bootstrap for styling navigation and layout
