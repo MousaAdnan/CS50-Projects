@@ -1,0 +1,19 @@
+HTML tags:
+<!DOCTYPE html>
+<html>
+<head>
+<link>
+<title>
+<body>
+<nav>
+<a>
+<div>
+<h1>
+<p>
+
+CSS Properties:
+font-family
+background-color
+color
+margin-bottom
+text-align
