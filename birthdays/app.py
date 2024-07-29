@@ -27,7 +27,7 @@ def index():
     if request.method == "POST":
 
         name = request.form.get("name")
-        month = int(requrest.form.get("month"))
+        month = int(request.form.get("month"))
         day = int(request.form.get("day"))
 
         if name and month and day:
