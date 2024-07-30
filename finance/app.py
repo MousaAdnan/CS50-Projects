@@ -68,8 +68,14 @@ def buy():
             return apology("Not Enough", 400)
 
         else:
-            db.execute("INSERT INTO trades (id, symbol, name, shares, price))
+            db.execute("INSERT INTO trades (id, symbol, name, shares, price) VALUES(?, ?, ?, ?, ?)", sesssion["user_id"], stock_quote['symbol'], stock_quote['name'], int(shares_nbr), stock_quote['price'])
+            cash = user_cash[0]["cash"]
+            db.execute("UPDATE userss SET cash = ? WHERE id = ?", cash - total_cost, session["user_id"])
+            flash("Purchased")
+            return redirect("/")
 
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
