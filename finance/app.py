@@ -136,9 +136,13 @@ def register():
         if len(rows) == 1:
             return apology("username already exists", 400)
         else:
-            
+            hashcode = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hashcode)
 
-    return apology("TODO")
+        return redirect("/")
+
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
