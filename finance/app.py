@@ -115,7 +115,7 @@ def register():
 
     session.clear()
 
-    if request.metho == "POST":
+    if request.method == "POST":
 
         username = request.form.get("username")
         password = request.form.get("password")
