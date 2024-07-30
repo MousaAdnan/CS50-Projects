@@ -62,6 +62,13 @@ def buy():
 
         total_cost = int(shares_nbr) * stock_quote["price"]
 
+        user_cash = db.execute("SELECT * FROM users WHERE id = ?", sesssion["user_id"])
+
+        if user_cash[0]["cash"] < total_cost:
+            return apology("Not Enough", 400)
+
+        else:
+
 
 
 @app.route("/history")
