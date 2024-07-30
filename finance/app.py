@@ -42,7 +42,19 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        shares_nbr = request.form.get("shares")
+
+        if symbol == "":
+            return apology("MISSING SYMBOL", 400)
+        if shares_nbr == "" or shares_nbr.isalpha():
+            return apology("MISSING SHARES", 400)
+        if not is_int(shares_nbr):
+            return apology("fractional not supported", 400)
+        if int(shares_nbr) <= 0:
+            return apology("Number has to be above 0:, 400)
+                           
 
 
 @app.route("/history")
