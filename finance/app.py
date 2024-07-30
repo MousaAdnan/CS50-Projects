@@ -133,11 +133,11 @@ def register():
         elif username == "":
             return apology("Please input username", 400)
 
-        if len(rows) == 1:
+        if len(rows) != 0:
             return apology("username already exists", 400)
-        else:
-            hashcode = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
-            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hashcode)
+
+        hashcode = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+        db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hashcode)
 
         return redirect("/")
 
