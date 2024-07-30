@@ -135,7 +135,8 @@ def register():
 
         if len(rows) == 1:
             return apology("username already exists", 400)
-        
+        else:
+            
 
     return apology("TODO")
 
