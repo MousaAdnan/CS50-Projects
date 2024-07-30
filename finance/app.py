@@ -60,7 +60,7 @@ def buy():
         if not stock_quote:
             return apology("Invalid Symbol", 400)
 
-        total_cost = int()
+        total_cost = int(shares_nbr) * stock_quote["price"]
 
 
 
