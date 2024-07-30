@@ -53,8 +53,13 @@ def buy():
         if not is_int(shares_nbr):
             return apology("fractional not supported", 400)
         if int(shares_nbr) <= 0:
-            return apology("Number has to be above 0:, 400)
-                           
+            return apology("Number has to be above 0", 400)
+
+        stock_quote = lookup(symbol)
+
+        if not stock_quote:
+            return apology("Invalid Symbol", 400)
+
 
 
 @app.route("/history")
