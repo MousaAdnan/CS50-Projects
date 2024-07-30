@@ -68,6 +68,7 @@ def buy():
             return apology("Not Enough", 400)
 
         else:
+            db.execute("INSERT INTO trades (id, symbol, name, shares, price))
 
 
 
