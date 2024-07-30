@@ -60,6 +60,8 @@ def buy():
         if not stock_quote:
             return apology("Invalid Symbol", 400)
 
+        total_cost = int()
+
 
 
 @app.route("/history")
