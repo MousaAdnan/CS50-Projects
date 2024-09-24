@@ -134,7 +134,7 @@ def register():
             return apology("username exists", 400)
 
         db.execute("INSERT INTO users (username, hash) VALUES(?, ?)",
-                    request.form.get("username"), generste_password_hash(request.form.get("password")))
+                    request.form.get("username"), generate_password_hash(request.form.get("password")))
 
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
