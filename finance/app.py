@@ -130,7 +130,7 @@ def register():
 
     rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-    if len(rows) != 0;
+    if len(rows) != 0:
         return apology("username exists", 400)
 
     db.execute("INSERT INTO users (username, hash) VALUES(?, ?)",
