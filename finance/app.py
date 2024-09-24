@@ -119,28 +119,28 @@ def register():
         if not request.form.get("username"):
             return apology("Pls provide username", 400)
 
-    elif not request.form.get("password"):
-        return apology("Pls provide password", 400)
+        elif not request.form.get("password"):
+            return apology("Pls provide password", 400)
 
-    elif not request.form.get("confirmation"):
-        return apology("Pls provide confirmation for password", 400)
+        elif not request.form.get("confirmation"):
+            return apology("Pls provide confirmation for password", 400)
 
-    elif request.form.get("password") != request.form.get("confirmation"):
-        return apology("Passwords do not match", 400)
+        elif request.form.get("password") != request.form.get("confirmation"):
+            return apology("Passwords do not match", 400)
 
-    rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-    if len(rows) != 0:
-        return apology("username exists", 400)
+        if len(rows) != 0:
+            return apology("username exists", 400)
 
-    db.execute("INSERT INTO users (username, hash) VALUES(?, ?)",
-               request.form.get("username"), generste_password_hash(request.form.get("password")))
+        db.execute("INSERT INTO users (username, hash) VALUES(?, ?)",
+                    request.form.get("username"), generste_password_hash(request.form.get("password")))
 
-    rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-    session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0]["id"]
 
-    return redirect("/")
+        return redirect("/")
 
 else:
     return render_template("register.html")
