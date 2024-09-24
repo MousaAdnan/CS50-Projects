@@ -42,40 +42,7 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    if request.method == "POST":
-        symbol = request.form.get("symbol")
-        shares_nbr = request.form.get("shares")
-
-        if symbol == "":
-            return apology("MISSING SYMBOL", 400)
-        if shares_nbr == "" or shares_nbr.isalpha():
-            return apology("MISSING SHARES", 400)
-        if not is_int(shares_nbr):
-            return apology("fractional not supported", 400)
-        if int(shares_nbr) <= 0:
-            return apology("Number has to be above 0", 400)
-
-        stock_quote = lookup(symbol)
-
-        if not stock_quote:
-            return apology("Invalid Symbol", 400)
-
-        total_cost = int(shares_nbr) * stock_quote["price"]
-
-        user_cash = db.execute("SELECT * FROM users WHERE id = ?", sesssion["user_id"])
-
-        if user_cash[0]["cash"] < total_cost:
-            return apology("Not Enough", 400)
-
-        else:
-            db.execute("INSERT INTO trades (id, symbol, name, shares, price) VALUES(?, ?, ?, ?, ?)", sesssion["user_id"], stock_quote['symbol'], stock_quote['name'], int(shares_nbr), stock_quote['price'])
-            cash = user_cash[0]["cash"]
-            db.execute("UPDATE userss SET cash = ? WHERE id = ?", cash - total_cost, session["user_id"])
-            flash("Purchased")
-            return redirect("/")
-
-    else:
-        return render_template("buy.html")
+    return apology("TODO")
 
 
 @app.route("/history")
@@ -139,52 +106,13 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    if request.method == "POST":
-        symbol = request.form.get("symbol")
-        quote = lookup(symbol)
-        if not quote:
-            return apology("Invalid Symbol", 400)
-        return render_template("quote.html", quote=quote)
-    else:
-        return render_template("quote.html")
+    return apology("TODO")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-
-    session.clear()
-
-    if request.method == "POST":
-
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-
-        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
-
-        if not (password == confirmation):
-            return apology("Password does not match", 400)
-
-        if password == "":
-            return apology("Please input password", 400)
-        elif confirmation == "":
-            return apology("Please input password again", 400)
-        elif username == "":
-            return apology("Please input username", 400)
-
-        if len(rows) != 0:
-            return apology("username already exists", 400)
-
-        db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", request.form.get("username"), generate_password_hash(request.form.get("username")))
-
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
-
-        session["user_id"] = rows[0]["id"]
-        return redirect("/")
-
-    else:
-        return render_template("register.html")
+    return apology("TODO")
 
 
 @app.route("/sell", methods=["GET", "POST"])
