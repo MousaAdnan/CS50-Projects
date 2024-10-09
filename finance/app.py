@@ -41,7 +41,7 @@ def index():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
-     """Buy shares of stock"""
+    """Buy shares of stock"""
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         symbol = request.form.get("symbol")
@@ -49,9 +49,9 @@ def buy():
 
         # Ensure symbol is not blank
         if symbol == "":
-            return apology("MISSING SYMBOL", 400)
+            return apology("No Symbol", 400)
         if shares_nbr == "" or shares_nbr.isalpha():
-            return apology("MISSING SHARES", 400)
+            return apology("No Shares", 400)
         if not is_int(shares_nbr):
             return apology("fractional not supported", 400)
         if int(shares_nbr) <= 0:
