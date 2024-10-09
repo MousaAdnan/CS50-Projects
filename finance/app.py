@@ -42,44 +42,7 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        symbol = request.form.get("symbol")
-        shares_nbr = request.form.get("shares")
-
-        # Ensure symbol is not blank
-        if symbol == "":
-            return apology("No Symbol", 400)
-        if shares_nbr == "" or shares_nbr.isalpha():
-            return apology("No Shares", 400)
-        if not is_int(shares_nbr):
-            return apology("fractional not supported", 400)
-        if int(shares_nbr) <= 0:
-            return apology("share number can't be negative number or zero!", 400)
-
-        stock_quote = lookup(symbol)
-
-        if not stock_quote:
-            return apology("INVALID SYMBOL", 400)
-
-        total_cost = int(shares_nbr) * stock_quote["price"]
-
-        user_cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
-
-        if user_cash[0]["cash"] < total_cost:
-            return apology("CAN'T AFFORD", 400)
-
-        else:
-            db.execute("INSERT INTO trades (id, symbol, name, shares, price) VALUES(?, ?, ?, ?, ?)",
-                       session["user_id"], stock_quote['symbol'], stock_quote['name'], int(shares_nbr), stock_quote['price'])
-            cash = user_cash[0]["cash"]
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", cash - total_cost, session["user_id"])
-            flash('Bought!')
-            return redirect("/")
-
-    # User reached route via GET
-    else:
-        return render_template("buy.html")
+    return apology("TODO")
 
 
 @app.route("/history")
