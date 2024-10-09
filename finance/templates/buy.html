@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Log In
+    Buy
 {% endblock %}
 
 {% block main %}
-    <form action="/buy" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus="" class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Symbol" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" class="form-control mx-auto w-auto" min="1" name="shares" placeholder="Shares" type="number">
-        </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+    <h1>Buy</h1>
+    <form action="{{ url_for('buy') }}" method="post">
+        <label for="symbol">Symbol:</label>
+        <br>
+        <label for="shares">Shares:</label>
+        <input type="text" name="shares" id="shares">
+        <br>
+        <input type="submit" value="Buy">
     </form>
 {% endblock %}
