@@ -101,16 +101,25 @@ def buy():
         if cash < total_cost:
             return apology("not enough cash")
 
-        # Update user's cash and add transaction
-        db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", total_cost, session["user_id"])
-        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)",
-                   session["user_id"], symbol, shares, price)
+        # Log values to check for issues
+        print(f"user_id: {session['user_id']}, symbol: {symbol}, shares: {shares}, price: {price}")
+
+        try:
+            # Update user's cash and add transaction
+            db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", total_cost, session["user_id"])
+            db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)",
+                       session["user_id"], symbol, int(shares), price)
+        except Exception as e:
+            # Log the exception for debugging
+            print(f"Error during transaction insert: {e}")
+            return apology("transaction failed")
 
         # Confirm purchase and redirect to portfolio
         flash(f"Bought {shares} shares of {symbol} for {usd(total_cost)}!")
         return redirect("/")
     else:
         return render_template("buy.html")
+
 
 
 
