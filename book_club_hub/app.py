@@ -20,6 +20,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = "supersecretkey"
 Session(app)
 
+
+
 db = SQL("sqlite:///book_club_hub.db")
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
