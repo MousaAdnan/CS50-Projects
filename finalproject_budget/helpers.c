@@ -9,6 +9,7 @@
 int write_entry(const char *filename, const char *date, float amount, int type, const char *category, const char *description) {
     FILE *file = fopen(filename, "a");
     if (!file) {
+        perror("Error opening file");
         return 0;
     }
     fprintf(file, "%s,%.2f,%d,%s,%s\n", date, amount, type, category, description);
@@ -20,20 +21,22 @@ int write_entry(const char *filename, const char *date, float amount, int type, 
 float calculate_balance(const char *filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
-        printf("Error opening file.\n");
+        perror("Error opening file");
         return 0;
     }
 
     float balance = 0.0;
     char line[MAX_LINE];
-    while (fgets(line, MAX_LINE, file)) {
-        char *token = strtok(line, ",");
-        float amount = atof(strtok(NULL, ","));
-        int type = atoi(strtok(NULL, ","));
+    while (fgets(line, sizeof(line), file)) {
+        char *date = strtok(line, ",");
+        char *amount_str = strtok(NULL, ",");
+        char *type_str = strtok(NULL, ",");
+        float amount = atof(amount_str);
+        int type = atoi(type_str);
 
-        if (type == 1) {  // Income
+        if (type == 1) {
             balance += amount;
-        } else if (type == 2) {  // Expense
+        } else if (type == 2) {
             balance -= amount;
         }
     }
@@ -45,22 +48,24 @@ float calculate_balance(const char *filename) {
 void print_category_summary(const char *filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
-        printf("Error opening file.\n");
+        perror("Error opening file");
         return;
     }
 
-    char line[MAX_LINE];
-    float category_totals[100] = {0};  // Supports up to 100 categories
+    float category_totals[100] = {0};
     char categories[100][20];
     int category_count = 0;
 
-    while (fgets(line, MAX_LINE, file)) {
-        char *token = strtok(line, ",");
-        float amount = atof(strtok(NULL, ","));
-        int type = atoi(strtok(NULL, ","));
+    char line[MAX_LINE];
+    while (fgets(line, sizeof(line), file)) {
+        char *date = strtok(line, ",");
+        char *amount_str = strtok(NULL, ",");
+        char *type_str = strtok(NULL, ",");
         char *category = strtok(NULL, ",");
+        float amount = atof(amount_str);
+        int type = atoi(type_str);
 
-        if (type == 2) {  // Expense only
+        if (type == 2) {
             int found = 0;
             for (int i = 0; i < category_count; i++) {
                 if (strcmp(categories[i], category) == 0) {

@@ -42,22 +42,27 @@ int main() {
     return 0;
 }
 
-// Add a new entry to the CSV file
+// Adds a new entry to the CSV file
 void add_entry() {
     char date[11], category[20], description[50];
     float amount;
     int type;
 
     printf("Enter date (YYYY-MM-DD): ");
-    scanf("%s", date);
+    scanf("%10s", date);  // Limiting input size to prevent overflow
     printf("Enter amount: ");
     scanf("%f", &amount);
     printf("Enter type (1 for Income, 2 for Expense): ");
     scanf("%d", &type);
     printf("Enter category: ");
-    scanf("%s", category);
+    scanf("%19s", category);
     printf("Enter description: ");
-    scanf("%s", description);
+    scanf("%49s", description);
+
+    if (type != 1 && type != 2) {
+        printf("Invalid type. Please enter 1 for Income or 2 for Expense.\n");
+        return;
+    }
 
     if (write_entry("data.csv", date, amount, type, category, description)) {
         printf("Entry added successfully!\n");
@@ -66,13 +71,13 @@ void add_entry() {
     }
 }
 
-// View the current balance
+// Views the current balance by summing income and expenses
 void view_balance() {
     float balance = calculate_balance("data.csv");
     printf("Current Balance: $%.2f\n", balance);
 }
 
-// Show a summary of expenses by category
+// Shows a summary of expenses by category
 void summary_by_category() {
     print_category_summary("data.csv");
 }
