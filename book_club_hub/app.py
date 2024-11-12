@@ -5,6 +5,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from cs50 import SQL
 from datetime import datetime
 
+# Connect to your database
+db = SQL("sqlite:///book_club_hub.db")
+
+# Execute the query to list all tables
+tables = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
+
+# Print the list of tables
+print("Tables in the database:", tables)
+
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
