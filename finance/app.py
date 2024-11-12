@@ -24,6 +24,13 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///finance.db")
 
+@app.route("/test_db")
+def test_db():
+    try:
+        users = db.execute("SELECT * FROM users LIMIT 1")
+        return f"Database is working. Found user: {users}"
+    except Exception as e:
+        return str(e)
 
 @app.after_request
 def after_request(response):
