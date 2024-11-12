@@ -57,35 +57,53 @@ def index():
 @login_required
 def buy():
     if request.method == "POST":
+        # Get and validate form inputs
         symbol = request.form.get("symbol").upper()
         shares = request.form.get("shares")
+        
+        # Validate inputs
         if not symbol:
             return apology("provide symbol")
-        elif not shares or not shares.isdigit() or int(shares) <= 0:
+        elif not shares.isdigit() or int(shares) <= 0:
             return apology("needs to be positive")
 
+        # Look up the symbol to get the price
         quote = lookup(symbol)
         if quote is None:
             return apology("symbol not found")
 
+        # Calculate total cost
         price = quote["price"]
         total_cost = int(shares) * price
-        cash = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])[0]["cash"]
 
+        # Fetch user's cash balance from the users table
+        user_data = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+        if not user_data:
+            return apology("user not found")
+
+        cash = user_data[0]["cash"]
+
+        # Ensure sufficient funds
         if cash < total_cost:
             return apology("not enough cash")
 
-        db.execute("UPDATE users SET cash = cash - :total_cost WHERE id = :user_id",
-                    total_cost=total_cost, user_id=session["user_id"])
+        # Update user's cash and add transaction, ensuring atomicity
+        try:
+            db.execute("BEGIN")
+            db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", total_cost, session["user_id"])
+            db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)",
+                       session["user_id"], symbol, shares, price)
+            db.execute("COMMIT")
+        except Exception as e:
+            db.execute("ROLLBACK")
+            return apology("transaction failed")
 
-        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (:user_id, :symbol, :shares, :price)",
-                    user_id=session["user_id"], symbol=symbol, shares=shares, price=price)
-
+        # Confirm purchase and redirect to portfolio
         flash(f"Bought {shares} shares of {symbol} for {usd(total_cost)}!")
         return redirect("/")
-
     else:
         return render_template("buy.html")
+
 
 
 @app.route("/history")
