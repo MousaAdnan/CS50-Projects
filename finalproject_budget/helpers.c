@@ -4,6 +4,7 @@
 #include "helpers.h"
 
 #define MAX_LINE 1024
+#define MAX_CATEGORIES 100
 
 // Writes a new entry to the CSV file
 int write_entry(const char *filename, const char *date, float amount, int type, const char *category, const char *description) {
@@ -52,8 +53,8 @@ void print_category_summary(const char *filename) {
         return;
     }
 
-    float category_totals[100] = {0};
-    char categories[100][20];
+    float category_totals[MAX_CATEGORIES] = {0};
+    char categories[MAX_CATEGORIES][20];
     int category_count = 0;
 
     char line[MAX_LINE];
@@ -62,11 +63,13 @@ void print_category_summary(const char *filename) {
         char *amount_str = strtok(NULL, ",");
         char *type_str = strtok(NULL, ",");
         char *category = strtok(NULL, ",");
-        float amount = atof(amount_str);
-        int type = atoi(type_str);
 
-        if (type == 2) {
+        // Verify parsing success and ensure data is for an expense
+        if (amount_str && type_str && category && atoi(type_str) == 2) {
+            float amount = atof(amount_str);
             int found = 0;
+
+            // Check if the category already exists in our array
             for (int i = 0; i < category_count; i++) {
                 if (strcmp(categories[i], category) == 0) {
                     category_totals[i] += amount;
@@ -74,7 +77,9 @@ void print_category_summary(const char *filename) {
                     break;
                 }
             }
-            if (!found && category_count < 100) {
+
+            // If not found, add new category to the array
+            if (!found && category_count < MAX_CATEGORIES) {
                 strcpy(categories[category_count], category);
                 category_totals[category_count] = amount;
                 category_count++;
@@ -83,6 +88,7 @@ void print_category_summary(const char *filename) {
     }
     fclose(file);
 
+    // Print the summary of expenses by category
     printf("Expense Summary by Category:\n");
     for (int i = 0; i < category_count; i++) {
         printf("%s: $%.2f\n", categories[i], category_totals[i]);

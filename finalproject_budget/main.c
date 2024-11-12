@@ -3,94 +3,81 @@
 #include <string.h>
 #include "helpers.h"
 
-#define MAX_LINE 1024
-#define MAX_CATEGORIES 100
+// Function prototypes
+void add_entry();
+void view_balance();
+void summary_by_category();
 
-// Writes a new entry to the CSV file
-int write_entry(const char *filename, const char *date, float amount, int type, const char *category, const char *description) {
-    FILE *file = fopen(filename, "a");
-    if (!file) {
-        perror("Error opening file");
-        return 0;
-    }
-    fprintf(file, "%s,%.2f,%d,%s,%s\n", date, amount, type, category, description);
-    fclose(file);
-    return 1;
-}
+int main() {
+    int choice;
+    printf("Welcome to Personal Budget Tracker\n");
 
-// Calculates the current balance from the CSV file
-float calculate_balance(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        perror("Error opening file");
-        return 0;
-    }
+    do {
+        printf("\nMenu:\n");
+        printf("1. Add Entry\n");
+        printf("2. View Balance\n");
+        printf("3. Summary by Category\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
 
-    float balance = 0.0;
-    char line[MAX_LINE];
-    while (fgets(line, sizeof(line), file)) {
-        char *date = strtok(line, ",");
-        char *amount_str = strtok(NULL, ",");
-        char *type_str = strtok(NULL, ",");
-        float amount = atof(amount_str);
-        int type = atoi(type_str);
-
-        if (type == 1) {
-            balance += amount;
-        } else if (type == 2) {
-            balance -= amount;
+        switch (choice) {
+            case 1:
+                add_entry();
+                break;
+            case 2:
+                view_balance();
+                break;
+            case 3:
+                summary_by_category();
+                break;
+            case 4:
+                printf("Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
         }
-    }
-    fclose(file);
-    return balance;
+    } while (choice != 4);
+
+    return 0;
 }
 
-// Prints a summary of expenses by category
-void print_category_summary(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        perror("Error opening file");
+// Adds a new entry to the CSV file
+void add_entry() {
+    char date[11], category[20], description[50];
+    float amount;
+    int type;
+
+    printf("Enter date (YYYY-MM-DD): ");
+    scanf("%10s", date);  // Limiting input size to prevent overflow
+    printf("Enter amount: ");
+    scanf("%f", &amount);
+    printf("Enter type (1 for Income, 2 for Expense): ");
+    scanf("%d", &type);
+    printf("Enter category: ");
+    scanf("%19s", category);
+    printf("Enter description: ");
+    scanf("%49s", description);
+
+    if (type != 1 && type != 2) {
+        printf("Invalid type. Please enter 1 for Income or 2 for Expense.\n");
         return;
     }
 
-    float category_totals[MAX_CATEGORIES] = {0};
-    char categories[MAX_CATEGORIES][20];
-    int category_count = 0;
-
-    char line[MAX_LINE];
-    while (fgets(line, sizeof(line), file)) {
-        char *date = strtok(line, ",");
-        char *amount_str = strtok(NULL, ",");
-        char *type_str = strtok(NULL, ",");
-        char *category = strtok(NULL, ",");
-
-        // Verify parsing success and ensure data is for an expense
-        if (amount_str && type_str && category && atoi(type_str) == 2) {
-            float amount = atof(amount_str);
-            int found = 0;
-
-            // Check if the category already exists in our array
-            for (int i = 0; i < category_count; i++) {
-                if (strcmp(categories[i], category) == 0) {
-                    category_totals[i] += amount;
-                    found = 1;
-                    break;
-                }
-            }
-
-            // If not found, add new category to the array
-            if (!found && category_count < MAX_CATEGORIES) {
-                strcpy(categories[category_count], category);
-                category_totals[category_count] = amount;
-                category_count++;
-            }
-        }
+    if (write_entry("data.csv", date, amount, type, category, description)) {
+        printf("Entry added successfully!\n");
+    } else {
+        printf("Failed to add entry.\n");
     }
-    fclose(file);
+}
 
-    // Print the summary of expenses by category
-    printf("Expense Summary by Category:\n");
-    for (int i = 0; i < category_count; i++) {
-        printf("%s: $%.2f\n", categories[i], category_totals[i]);
-    }
+// Views the current balance by summing income and expenses
+void view_balance() {
+    float balance = calculate_balance("data.csv");
+    printf("Current Balance: $%.2f\n", balance);
+}
+
+// Shows a summary of expenses by category
+void summary_by_category() {
+    print_category_summary("data.csv");
 }
