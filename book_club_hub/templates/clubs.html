@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ club.name }}</h2>
+<p>{{ club.description }}</p>
+<h3>Members</h3>
+<ul>
+    {% for member in members %}
+        <li>{{ member.username }}</li>
+    {% endfor %}
+</ul>
+<h3>Discussion</h3>
+{% for discussion in discussions %}
+    <div class="discussion-post">
+        <p><strong>{{ discussion.username }}:</strong> {{ discussion.post }}</p>
+        <p><small>{{ discussion.timestamp }}</small></p>
+    </div>
+{% endfor %}
+<form action="/club/{{ club.id }}" method="post">
+    <textarea name="post" placeholder="Write your post here..." required></textarea>
+    <button type="submit">Post</button>
+</form>
+{% endblock %}

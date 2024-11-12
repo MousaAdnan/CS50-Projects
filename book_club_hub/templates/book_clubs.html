@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Book Clubs</h2>
+{% for club in clubs %}
+    <div class="club">
+        <h3>{{ club.name }}</h3>
+        <p>{{ club.description }}</p>
+        <a href="/club/{{ club.id }}">View Club</a>
+    </div>
+{% endfor %}
+{% endblock %}
