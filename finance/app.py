@@ -34,23 +34,26 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM transactions WHERE user_id = :user_id GROUP BY symbol HAVING total_shares > 0",
-                        user_id=session["user_id"])
+    # Fetch user's stocks
+    stocks = db.execute("SELECT symbol, SUM(shares) as total_shares FROM transactions WHERE user_id = ? GROUP BY symbol HAVING total_shares > 0",
+                        session["user_id"])
 
-    cash = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=session["user_id"])[0]["cash"]
+    # Get user's cash
+    cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])[0]["cash"]
 
+    # Initialize total portfolio value with user's cash balance
     total_value = cash
-    grand_total = cash
 
+    # Add stock details to each stock in the portfolio
     for stock in stocks:
         quote = lookup(stock["symbol"])
         stock["name"] = quote["name"]
         stock["price"] = quote["price"]
         stock["value"] = stock["price"] * stock["total_shares"]
         total_value += stock["value"]
-        grand_total += stock["value"]
 
-    return render_template("index.html", stocks=stocks, cash=cash, total_value=total_value, grand_total=grand_total)
+    # Pass data to template
+    return render_template("index.html", stocks=stocks, cash=cash, total_value=total_value)
 
 
 
