@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h2>Quote for {{ quote.name }}</h2>
+<p>Symbol: {{ quote.symbol }}</p>
+<p>Price: {{ quote.price | usd }}</p>
+<a href="/quote">Get another quote</a>
+{% endblock %}
