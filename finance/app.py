@@ -5,6 +5,9 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
+db_path = os.path.join(os.path.dirname(__file__), "finance.db")
+db = SQL(f"sqlite:///{db_path}")
+
 from helpers import apology, login_required, lookup, usd
 
 # Configure application
