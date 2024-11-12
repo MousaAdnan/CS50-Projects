@@ -60,7 +60,7 @@ def buy():
         # Get and validate form inputs
         symbol = request.form.get("symbol").upper()
         shares = request.form.get("shares")
-        
+
         # Validate inputs
         if not symbol:
             return apology("provide symbol")
@@ -113,43 +113,54 @@ def history():
     return apology("TODO")
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    """Log user in"""
-
-    # Forget any user_id
-    session.clear()
-
-    # User reached route via POST (as by submitting a form via POST)
+@app.route("/buy", methods=["GET", "POST"])
+@login_required
+def buy():
     if request.method == "POST":
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return apology("must provide username", 403)
+        # Get and validate form inputs
+        symbol = request.form.get("symbol").upper()
+        shares = request.form.get("shares")
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("must provide password", 403)
+        # Validate inputs
+        if not symbol:
+            return apology("provide symbol")
+        elif not shares.isdigit() or int(shares) <= 0:
+            return apology("needs to be positive")
 
-        # Query database for username
-        rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", request.form.get("username")
-        )
+        # Look up the symbol to get the price
+        quote = lookup(symbol)
+        if quote is None:
+            return apology("symbol not found")
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
-            return apology("invalid username and/or password", 403)
+        # Calculate total cost
+        price = quote["price"]
+        total_cost = int(shares) * price
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        # Fetch user's cash balance from the users table
+        user_data = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+        if not user_data:
+            return apology("user not found")
 
-        # Redirect user to home page
+        cash = user_data[0]["cash"]
+
+        # Ensure sufficient funds
+        if cash < total_cost:
+            return apology("not enough cash")
+
+        try:
+            # Update user's cash and add transaction
+            db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", total_cost, session["user_id"])
+            db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)",
+                       session["user_id"], symbol, shares, price)
+        except Exception as e:
+            return apology("transaction failed")
+
+        # Confirm purchase and redirect to portfolio
+        flash(f"Bought {shares} shares of {symbol} for {usd(total_cost)}!")
         return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return render_template("buy.html")
+
 
 
 @app.route("/logout")
