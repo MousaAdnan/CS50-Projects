@@ -5,11 +5,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from cs50 import SQL
 from datetime import datetime
 
-# Connect to your database
+
 db = SQL("sqlite:///book_club_hub.db")
 
-# Execute the query to list all tables
-tables = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
+# Test query to confirm connection works
+try:
+    tables = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    print("Tables:", tables)
+except Exception as e:
+    print("Error connecting to database:", e)
 
 # Print the list of tables
 print("Tables in the database:", tables)
