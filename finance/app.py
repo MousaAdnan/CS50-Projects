@@ -5,18 +5,14 @@ from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, lookup, usd
 
-# Configure application
 app = Flask(__name__)
 
-# Configure custom filter
 app.jinja_env.filters["usd"] = usd
 
-# Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///finance.db")
 
 @app.route("/")
@@ -37,15 +33,26 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        if not username or not password or password != confirmation:
-            return apology("must provide valid username and matching passwords")
+
+        if not username or not password or not confirmation:
+            return apology("must provide username and password")
+        if password != confirmation:
+            return apology("passwords must match")
+
+        existing_user = db.execute("SELECT * FROM users WHERE username = ?", username)
+        if len(existing_user) > 0:
+            return apology("username already taken")
+
         hash = generate_password_hash(password)
         result = db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)
         if not result:
-            return apology("username taken")
+            return apology("registration failed")
+
         session["user_id"] = result
         return redirect("/")
+
     return render_template("register.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
