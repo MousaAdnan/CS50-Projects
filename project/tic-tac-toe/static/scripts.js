@@ -25,10 +25,10 @@ $(document).ready(function () {
         $.ajax({
             url: "/reset",
             type: "POST",
-            success: function () {
+            success: function (data) {
                 $(".cell").text(""); // Clear the board visually
                 clearWinnerMessage(); // Clear the winner message
-                // Do not modify the scoreboard
+                updateScores(data.scores); // Ensure scores are refreshed
             },
             error: function () {
                 alert("An error occurred while resetting the game.");

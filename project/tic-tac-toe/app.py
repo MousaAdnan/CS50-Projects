@@ -55,8 +55,12 @@ def make_move():
 
 @app.route("/reset", methods=["POST"])
 def reset():
-    initialize_game()
-    return jsonify({"success": True})
+    # Reset only the board and turn, leaving the scores intact
+    game_state["board"] = [""] * 9
+    game_state["turn"] = "X"
+    game_state["winner"] = None
+    return jsonify({"success": True, "scores": game_state["scores"]})
+
 
 
 # Determine the winner or check for a tie
