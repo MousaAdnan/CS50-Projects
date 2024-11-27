@@ -27,6 +27,7 @@ $(document).ready(function () {
             type: "POST",
             success: function () {
                 $(".cell").text(""); // Clear the board visually
+                clearWinnerMessage(); // Clear the winner message
             },
             error: function () {
                 alert("An error occurred while resetting the game.");
@@ -47,7 +48,18 @@ $(document).ready(function () {
     }
 
     function displayWinner(winner) {
-        const message = winner === "Tie" ? "It's a tie!" : `${winner} wins!`;
-        $("#winner").text(message);
+        let message = "";
+        if (winner === "X") {
+            message = "Player 1 Wins!";
+        } else if (winner === "O") {
+            message = "Computer Wins!";
+        } else if (winner === "Tie") {
+            message = "Tie :(";
+        }
+        $("#winner-message").text(message);
+    }
+
+    function clearWinnerMessage() {
+        $("#winner-message").text(""); // Clear the message
     }
 });

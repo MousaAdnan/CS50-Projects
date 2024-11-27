@@ -14,6 +14,14 @@ h1 {
     margin-bottom: 20px;
 }
 
+#winner-message {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+    height: 30px; /* Reserve space even if empty */
+}
+
 #grid {
     display: grid;
     grid-template-columns: repeat(3, 100px);
