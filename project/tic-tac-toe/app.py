@@ -123,6 +123,10 @@ def computer_move():
         position = random.choice(empty_positions)
         board[position] = "O"  # Make the move in a valid empty position
 
+@app.route("/scores", methods=["GET"])
+def get_scores():
+    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
+    return jsonify(scores)
 
 
 if __name__ == "__main__":
