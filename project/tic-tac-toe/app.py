@@ -69,12 +69,17 @@ def reset():
 
 # Update scores
 def update_score(winner):
-    if winner == "X":
-        session["scores"]["player1"] += 1
-    elif winner == "O":
-        session["scores"]["player2"] += 1
-    else:
-        session["scores"]["ties"] += 1
+    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
+
+    if winner == "X":  # Player 1 wins
+        scores["player1"] += 1
+    elif winner == "O":  # Player 2 or Computer wins
+        scores["player2"] += 1
+    elif winner == "Tie":  # It's a tie
+        scores["ties"] += 1
+
+    session["scores"] = scores  # Save the updated scores
+
 
 # Check if there's a winner or a tie
 def check_winner(board):
@@ -84,14 +89,17 @@ def check_winner(board):
         [0, 4, 8], [2, 4, 6]              # Diagonals
     ]
 
+    # Check for a winner
     for combo in winning_combinations:
         if board[combo[0]] == board[combo[1]] == board[combo[2]] and board[combo[0]] != "":
-            return board[combo[0]]
+            return board[combo[0]]  # Return "X" or "O" (the winner)
 
-    if "" not in board:  # Tie
+    # Check for a tie
+    if "" not in board:  # No empty spaces and no winner
         return "Tie"
 
-    return None
+    return None  # No winner or tie yet
+
 
 def computer_move():
     board = session["board"]
