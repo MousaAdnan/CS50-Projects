@@ -27,8 +27,8 @@ def make_move():
 
     # Check if the position is valid
     if board[position] == "":
-        board[position] = turn
-        winner = check_winner(board)
+        board[position] = turn  # Update the board
+        winner = check_winner(board)  # Check for a winner
         if winner:
             update_score(winner)
             return jsonify({"winner": winner, "board": board})
@@ -36,7 +36,7 @@ def make_move():
         # Switch turn
         session["turn"] = "O" if turn == "X" else "X"
 
-        # If playing against the computer and it's its turn
+        # Handle computer move
         if mode == "computer" and session["turn"] == "O":
             computer_move()
             winner = check_winner(session["board"])
@@ -44,7 +44,9 @@ def make_move():
                 update_score(winner)
                 return jsonify({"winner": winner, "board": session["board"]})
 
+    # Return the updated board and no winner yet
     return jsonify({"board": session["board"], "winner": None})
+
 
 @app.route("/reset", methods=["POST"])
 def reset():
