@@ -84,28 +84,30 @@ def check_winner(board):
 # Computer makes a move
 def computer_move():
     board = session["board"]
+
     # Check if the computer can win
     for i in range(9):
-        if board[i] == "":
+        if board[i] == "":  # Ensure the position is empty
             board[i] = "O"  # Temporarily make a move
-            if check_winner(board) == "O":
-                return  # If this move wins, keep it
+            if check_winner(board) == "O":  # Check if this move wins
+                return  # Keep this move if it leads to a win
             board[i] = ""  # Undo the move
 
     # Check if the player is about to win, and block
     for i in range(9):
-        if board[i] == "":
+        if board[i] == "":  # Ensure the position is empty
             board[i] = "X"  # Temporarily block the player's move
-            if check_winner(board) == "X":
-                board[i] = "O"  # Block with "O"
-                return
+            if check_winner(board) == "X":  # Check if this move blocks
+                board[i] = "O"  # Block the player's win
+                return  # End the computer's turn
             board[i] = ""  # Undo the move
 
     # Otherwise, choose a random empty position
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = "O"
+        board[position] = "O"  # Make the move in a valid empty position
+
 
 
 if __name__ == "__main__":
