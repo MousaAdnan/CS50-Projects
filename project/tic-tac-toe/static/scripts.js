@@ -28,6 +28,7 @@ $(document).ready(function () {
             success: function () {
                 $(".cell").text(""); // Clear the board visually
                 clearWinnerMessage(); // Clear the winner message
+                // Do not modify the scoreboard
             },
             error: function () {
                 alert("An error occurred while resetting the game.");
