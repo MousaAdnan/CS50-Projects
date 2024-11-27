@@ -84,36 +84,28 @@ def check_winner(board):
 def computer_move():
     board = session["board"]
 
-    # Function to find the first valid move for a given condition
-    def find_winning_or_blocking_move(marker):
-        for i in range(9):
-            if board[i] == "":  # Ensure the position is empty
-                board[i] = marker  # Temporarily make a move
-                if check_winner(board) == marker:  # Check if this move wins
-                    board[i] = ""  # Undo the move
-                    return i  # Return the valid move
-                board[i] = ""  # Undo the move
-        return None  # No move found
+    # Check if the computer can win
+    for i in range(9):
+        if board[i] == "":  # Ensure the position is empty
+            board[i] = "O"  # Temporarily make a move
+            if check_winner(board) == "O":  # Check if this move wins
+                return  # Keep this move if it leads to a win
+            board[i] = ""  # Undo the move
 
-    # Step 1: Check if the computer can win
-    winning_move = find_winning_or_blocking_move("O")
-    if winning_move is not None:
-        board[winning_move] = "O"  # Make the winning move
-        return
+    # Check if the player is about to win, and block
+    for i in range(9):
+        if board[i] == "":  # Ensure the position is empty
+            board[i] = "X"  # Temporarily block the player's move
+            if check_winner(board) == "X":  # Check if this move blocks
+                board[i] = "O"  # Block the player's win
+                return  # End the computer's turn
+            board[i] = ""  # Undo the move
 
-    # Step 2: Check if the player is about to win and block
-    blocking_move = find_winning_or_blocking_move("X")
-    if blocking_move is not None:
-        board[blocking_move] = "O"  # Block the player's win
-        return
-
-    # Step 3: Choose a random empty position if no winning/blocking move exists
+    # Otherwise, choose a random empty position
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = "O"  # Make a move in a valid empty position
-
-
+        board[position] = "O"  # Make the move in a valid empty position
 
 
 
