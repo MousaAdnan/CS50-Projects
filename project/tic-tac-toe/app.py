@@ -30,6 +30,8 @@ def make_move():
         board[position] = turn  # Update the board
         winner = check_winner(board)  # Check for a winner
         if winner:
+            if mode == "player":  # Player vs Player mode
+                winner = "Player 1" if winner == "X" else "Player 2"
             update_score(winner)
             return jsonify({"winner": winner, "board": board})
 
@@ -82,11 +84,29 @@ def check_winner(board):
 # Computer makes a move
 def computer_move():
     board = session["board"]
+    # Check if the computer can win
+    for i in range(9):
+        if board[i] == "":
+            board[i] = "O"  # Temporarily make a move
+            if check_winner(board) == "O":
+                return  # If this move wins, keep it
+            board[i] = ""  # Undo the move
+
+    # Check if the player is about to win, and block
+    for i in range(9):
+        if board[i] == "":
+            board[i] = "X"  # Temporarily block the player's move
+            if check_winner(board) == "X":
+                board[i] = "O"  # Block with "O"
+                return
+            board[i] = ""  # Undo the move
+
+    # Otherwise, choose a random empty position
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = session["turn"]
-        session["turn"] = "X"
+        board[position] = "O"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
