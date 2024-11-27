@@ -13,11 +13,6 @@ $(document).ready(function () {
 
                 if (data.winner) {
                     displayWinner(data.winner);
-                } else {
-                    // Add a delay before the computer makes its move
-                    setTimeout(function () {
-                        fetchUpdatedBoard();
-                    }, 500); // 0.5 seconds delay
                 }
             },
             error: function () {
@@ -66,21 +61,5 @@ $(document).ready(function () {
 
     function clearWinnerMessage() {
         $("#winner-message").text(""); // Clear the message
-    }
-
-    // Function to fetch the updated board (used for computer's delayed move)
-    function fetchUpdatedBoard() {
-        $.ajax({
-            url: "/move",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({ position: -1 }), // Invalid move to only fetch
-            success: function (data) {
-                updateBoard(data.board);
-                if (data.winner) {
-                    displayWinner(data.winner);
-                }
-            },
-        });
     }
 });
