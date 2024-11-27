@@ -27,27 +27,34 @@ def make_move():
 
     # Check if the position is valid
     if board[position] == "":
-        board[position] = turn  # Update the board
-        winner = check_winner(board)  # Check for a winner
-        if winner:
-            if mode == "player":  # Player vs Player mode
-                winner = "Player 1" if winner == "X" else "Player 2"
-            update_score(winner)
-            return jsonify({"winner": winner, "board": board})
-
-        # Switch turn
-        session["turn"] = "O" if turn == "X" else "X"
-
-        # Handle computer move
-        if mode == "computer" and session["turn"] == "O":
-            computer_move()
-            winner = check_winner(session["board"])
+        if mode == "computer":
+            # User always places X in Player vs Computer mode
+            board[position] = "X"
+            winner = check_winner(board)
             if winner:
-                update_score(winner)
-                return jsonify({"winner": winner, "board": session["board"]})
+                update_score("X")
+                return jsonify({"winner": "Player 1", "board": board})
+
+            # Computer takes its turn as "O"
+            computer_move()
+            winner = check_winner(board)
+            if winner:
+                update_score("O")
+                return jsonify({"winner": "Computer", "board": board})
+
+        else:
+            # For Player vs Player mode, alternate turns
+            board[position] = turn  # Place the current player's move
+            winner = check_winner(board)
+            if winner:
+                update_score(turn)
+                winner_name = "Player 1" if turn == "X" else "Player 2"
+                return jsonify({"winner": winner_name, "board": board})
+            session["turn"] = "O" if turn == "X" else "X"  # Switch turn
 
     # Return the updated board and no winner yet
     return jsonify({"board": session["board"], "winner": None})
+
 
 
 @app.route("/reset", methods=["POST"])
