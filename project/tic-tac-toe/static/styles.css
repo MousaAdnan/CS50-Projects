@@ -121,21 +121,3 @@ button {
 button:hover {
     background-color: #800020; /* Slightly darker maroon on hover */
 }
-
-/* Footer Styling */
-footer {
-    margin-top: 40px;
-    text-align: center;
-    background-color: #A41034;
-    color: #ffffff;
-    padding: 10px;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer p {
-    margin: 0;
-    font-size: 0.9rem;
-}
