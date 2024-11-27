@@ -1,53 +1,141 @@
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+    font-family: 'Crimson Text', serif; /* Harvard-like serif font */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-color: #f5f5f5;
+    color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-h1 {
-    margin: 20px 0;
+/* Header Styling */
+header {
+    text-align: center;
+    background-color: #A41034; /* Harvard Maroon */
+    color: #ffffff;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-top: 5px;
+    color: #ffd700; /* Golden accent */
+}
+
+/* Main Content Styling */
+main {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Scoreboard Styling */
 .scores {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
     margin-bottom: 20px;
 }
 
-#winner-message {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 20px 0;
-    color: #333;
-    height: 30px; /* Reserve space even if empty */
+.score {
+    background-color: #A41034; /* Harvard Maroon */
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 15px;
+    width: 150px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+.score p {
+    font-size: 1.1rem;
+    margin: 0 0 5px;
+}
+
+.score span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Winner Message Styling */
+#winner-message {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 20px 0;
+    height: 30px; /* Reserve space even if empty */
+    color: #A41034; /* Harvard Maroon */
+}
+
+/* Grid Styling */
 #grid {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-gap: 5px;
+    grid-template-columns: repeat(3, 120px);
+    grid-gap: 10px;
     justify-content: center;
-    margin: 20px auto;
+    margin: 0 auto;
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     background-color: #ffffff;
-    border: 1px solid #000;
-    font-size: 36px;
+    border: 2px solid #A41034;
+    font-size: 48px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
     text-align: center;
-    line-height: 100px;
+    line-height: 120px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .cell:hover {
-    background-color: #f0f0f0;
+    background-color: #ffd700; /* Golden hover effect */
 }
 
+/* Reset Button Styling */
 button {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    background-color: #A41034;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #800020; /* Slightly darker maroon on hover */
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    background-color: #A41034;
+    color: #ffffff;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
 }
