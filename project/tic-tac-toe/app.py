@@ -22,43 +22,39 @@ def make_move():
     position = data["position"]
     mode = data["mode"]
 
-    board = session.get("board", [""] * 9)  # Ensure the board is retrieved
-    turn = session.get("turn", "X")  # Default turn starts with X
+    board = session.get("board", [""] * 9)
+    turn = session.get("turn", "X")
 
     # Check if the position is valid
     if board[position] == "":
         if mode == "computer":
-            # User always places X
-            board[position] = "X"
+            board[position] = "X"  # Player move
             winner = check_winner(board)
             if winner:
-                update_score("X")
-                session["board"] = board  # Persist the updated board
-                return jsonify({"winner": "Player 1", "board": board})
+                update_score(winner)
+                session["board"] = board
+                return jsonify({"winner": "Player 1" if winner == "X" else "Tie" if winner == "Tie" else "Computer", "board": board})
 
-            # Computer's turn as "O"
-            computer_move()
+            computer_move()  # Computer move
             winner = check_winner(board)
             if winner:
-                update_score("O")
-                session["board"] = board  # Persist the updated board
-                return jsonify({"winner": "Computer", "board": board})
+                update_score(winner)
+                session["board"] = board
+                return jsonify({"winner": "Computer" if winner == "O" else "Tie", "board": board})
 
         else:
-            # For Player vs Player mode
-            board[position] = turn  # Place the current player's move
+            board[position] = turn  # Player vs Player move
             winner = check_winner(board)
             if winner:
-                update_score(turn)
-                session["board"] = board  # Persist the updated board
-                winner_name = "Player 1" if turn == "X" else "Player 2"
-                return jsonify({"winner": winner_name, "board": board})
+                update_score(winner)
+                session["board"] = board
+                return jsonify({"winner": "Player 1" if winner == "X" else "Player 2" if winner == "O" else "Tie", "board": board})
+
             session["turn"] = "O" if turn == "X" else "X"  # Switch turn
 
-    # Persist the updated board and return it
+    # Update the session and return the updated board
     session["board"] = board
     return jsonify({"board": board, "winner": None})
-
 
 
 
