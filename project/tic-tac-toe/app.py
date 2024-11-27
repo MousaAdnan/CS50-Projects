@@ -33,7 +33,7 @@ def make_move():
             if winner:
                 update_score(winner)
                 session["board"] = board
-                return jsonify({"winner": "Player 1" if winner == "X" else "Tie" if winner == "Tie" else "Computer", "board": board})
+                return jsonify({"winner": "Player 1" if winner == "X" else "Tie", "board": board})
 
             computer_move()  # Computer move
             winner = check_winner(board)
@@ -56,12 +56,15 @@ def make_move():
     session["board"] = board
     return jsonify({"board": board, "winner": None})
 
-
-
 @app.route("/reset", methods=["POST"])
 def reset():
     initialize_game()
     return jsonify({"success": True})
+
+@app.route("/scores", methods=["GET"])
+def get_scores():
+    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
+    return jsonify(scores)
 
 # Update scores
 def update_score(winner):
@@ -75,7 +78,6 @@ def update_score(winner):
         scores["ties"] += 1
 
     session["scores"] = scores  # Save the updated scores
-
 
 # Check if there's a winner or a tie
 def check_winner(board):
@@ -96,7 +98,7 @@ def check_winner(board):
 
     return None  # No winner or tie yet
 
-
+# Computer makes a move
 def computer_move():
     board = session["board"]
 
@@ -121,13 +123,7 @@ def computer_move():
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = "O"  # Make the move in a valid empty position
-
-@app.route("/scores", methods=["GET"])
-def get_scores():
-    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
-    return jsonify(scores)
-
+        board[position] = "O"  # Make a move in a valid empty position
 
 if __name__ == "__main__":
     app.run(debug=True)
