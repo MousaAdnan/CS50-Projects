@@ -5,14 +5,12 @@ $(document).ready(function () {
     $(".cell").click(function () {
         const position = $(this).data("position");
 
-        // Send the move to the backend
         $.ajax({
             url: "/move",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({ position: position, mode: mode }),
             success: function (data) {
-                // Update the board and check for winner
                 updateBoard(data.board);
 
                 if (data.winner) {
@@ -27,6 +25,7 @@ $(document).ready(function () {
             },
         });
     });
+
 
     // Reset the game
     $("#reset").click(function () {
