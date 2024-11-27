@@ -1,23 +1,27 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify
 import random
 
 app = Flask(__name__)
-app.secret_key = "secret_key"  # Needed for session management
+
+# Global state
+game_state = {
+    "board": [""] * 9,
+    "turn": "X",
+    "winner": None,
+    "scores": {"player": 0, "computer": 0, "ties": 0},
+}
 
 
 # Initialize the game state
 def initialize_game():
-    session["board"] = [""] * 9  # Empty 3x3 board
-    session["turn"] = "X"        # Player starts
-    session["winner"] = None
-    if "scores" not in session:
-        session["scores"] = {"player": 0, "computer": 0, "ties": 0}
+    game_state["board"] = [""] * 9
+    game_state["turn"] = "X"
+    game_state["winner"] = None
+    game_state["scores"] = {"player": 0, "computer": 0, "ties": 0}
 
 
 @app.route("/")
 def index():
-    if "board" not in session:
-        initialize_game()
     return render_template("index.html")
 
 
@@ -27,8 +31,8 @@ def make_move():
     position = data["position"]
 
     # Get the current game state
-    board = session["board"]
-    turn = session["turn"]
+    board = game_state["board"]
+    turn = game_state["turn"]
 
     # Ensure the move is valid
     if board[position] == "" and turn == "X":  # Player's move
@@ -36,19 +40,17 @@ def make_move():
         winner = check_winner(board)
         if winner:
             update_score(winner)
-            session["board"] = board
-            return jsonify({"winner": winner, "board": board, "scores": session["scores"]})
+            return jsonify({"winner": winner, "board": board, "scores": game_state["scores"]})
 
         # Computer's turn
         computer_move()
-        winner = check_winner(session["board"])
+        winner = check_winner(board)
         if winner:
             update_score(winner)
-            return jsonify({"winner": winner, "board": session["board"], "scores": session["scores"]})
+            return jsonify({"winner": winner, "board": board, "scores": game_state["scores"]})
 
     # Update the game state
-    session["board"] = board
-    return jsonify({"board": board, "winner": None, "scores": session["scores"]})
+    return jsonify({"board": board, "winner": None, "scores": game_state["scores"]})
 
 
 @app.route("/reset", methods=["POST"])
@@ -79,26 +81,23 @@ def check_winner(board):
 
 # Update the scores
 def update_score(winner):
-    scores = session["scores"]
     if winner == "X":  # Player wins
-        scores["player"] += 1
+        game_state["scores"]["player"] += 1
     elif winner == "O":  # Computer wins
-        scores["computer"] += 1
+        game_state["scores"]["computer"] += 1
     elif winner == "Tie":  # Game is a tie
-        scores["ties"] += 1
-    session["scores"] = scores  # Save updated scores
+        game_state["scores"]["ties"] += 1
 
 
 # Handle the computer's move
 def computer_move():
-    board = session["board"]
+    board = game_state["board"]
 
     # Check if the computer can win
     for i in range(9):
         if board[i] == "":
             board[i] = "O"
             if check_winner(board) == "O":
-                session["board"] = board
                 return
             board[i] = ""  # Undo the move
 
@@ -108,7 +107,6 @@ def computer_move():
             board[i] = "X"
             if check_winner(board) == "X":
                 board[i] = "O"  # Block the player's win
-                session["board"] = board
                 return
             board[i] = ""  # Undo the move
 
@@ -117,7 +115,6 @@ def computer_move():
     if empty_positions:
         position = random.choice(empty_positions)
         board[position] = "O"
-        session["board"] = board
 
 
 if __name__ == "__main__":
