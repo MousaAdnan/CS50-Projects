@@ -8,19 +8,12 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <div class="scores">
-        <p>Player 1 (X): <span id="player1">0</span></p>
-        <p>Player 2/Computer (O): <span id="player2">0</span></p>
-        <p>Ties: <span id="ties">0</span></p>
-    </div>
     <div id="grid">
         {% for i in range(9) %}
             <div class="cell" data-position="{{ i }}"></div>
         {% endfor %}
     </div>
-    <div class="menu">
-        <button id="reset">Reset Game</button>
-    </div>
+    <button id="reset">Reset Game</button>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/scripts.js"></script>
 </body>

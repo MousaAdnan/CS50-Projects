@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, jsonify, session
 import random
 
 app = Flask(__name__)
-app.secret_key = "secret"  # Needed to use Flask sessions
+app.secret_key = "secret_key"  # Needed for session management
 
-# Initialize the board and scores
+
+# Initialize the game state
 def initialize_game():
-    session["board"] = [""] * 9
-    session["turn"] = "X"  # X always starts
+    session["board"] = [""] * 9  # Empty 3x3 board
+    session["turn"] = "X"        # Player starts
+    session["winner"] = None
+
 
 @app.route("/")
 def index():
@@ -15,42 +18,44 @@ def index():
         initialize_game()
     return render_template("index.html")
 
+
 @app.route("/move", methods=["POST"])
 def make_move():
     data = request.json
     position = data["position"]
 
-    board = session.get("board", [""] * 9)
-    turn = session.get("turn", "X")
+    # Get the current game state
+    board = session["board"]
+    turn = session["turn"]
 
-    # Check if the position is valid
-    if board[position] == "":
-        board[position] = turn  # Place the current player's move
+    # Ensure the move is valid
+    if board[position] == "" and turn == "X":  # Player's move
+        board[position] = "X"
         winner = check_winner(board)
         if winner:
-            session["board"] = board  # Persist the updated board
+            session["winner"] = winner
+            session["board"] = board
             return jsonify({"winner": winner, "board": board})
 
-        # Switch turn
-        session["turn"] = "O" if turn == "X" else "X"
+        # Computer's turn
+        computer_move()
+        winner = check_winner(session["board"])
+        if winner:
+            session["winner"] = winner
+            return jsonify({"winner": winner, "board": session["board"]})
 
-        # If it's the computer's turn, let it make a move
-        if session["turn"] == "O":
-            computer_move()
-            winner = check_winner(session["board"])
-            if winner:
-                return jsonify({"winner": winner, "board": session["board"]})
-
-    # Persist the updated board and return it
+    # Update the game state
     session["board"] = board
     return jsonify({"board": board, "winner": None})
+
 
 @app.route("/reset", methods=["POST"])
 def reset():
     initialize_game()
     return jsonify({"success": True})
 
-# Check if there's a winner
+
+# Determine the winner or check for a tie
 def check_winner(board):
     winning_combinations = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
@@ -61,23 +66,45 @@ def check_winner(board):
     # Check for a winner
     for combo in winning_combinations:
         if board[combo[0]] == board[combo[1]] == board[combo[2]] and board[combo[0]] != "":
-            return board[combo[0]]  # Return "X" or "O" (the winner)
+            return board[combo[0]]  # Return "X" or "O"
 
     # Check for a tie
-    if "" not in board:  # No empty spaces and no winner
+    if "" not in board:  # No empty spaces left
         return "Tie"
 
-    return None  # No winner yet
+    return None
 
-# Computer makes a move
+
+# Handle the computer's move
 def computer_move():
     board = session["board"]
 
-    # Randomly choose an empty position
+    # Check if the computer can win
+    for i in range(9):
+        if board[i] == "":
+            board[i] = "O"
+            if check_winner(board) == "O":
+                session["board"] = board
+                return
+            board[i] = ""  # Undo the move
+
+    # Check if the player is about to win, and block
+    for i in range(9):
+        if board[i] == "":
+            board[i] = "X"
+            if check_winner(board) == "X":
+                board[i] = "O"  # Block the player's win
+                session["board"] = board
+                return
+            board[i] = ""  # Undo the move
+
+    # Otherwise, choose a random empty position
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = "O"  # Computer plays as "O"
+        board[position] = "O"
+        session["board"] = board
+
 
 if __name__ == "__main__":
     app.run(debug=True)
