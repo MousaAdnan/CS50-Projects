@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
+    <div class="scores">
+        <p>Player Wins: <span id="player-wins">0</span></p>
+        <p>Computer Wins: <span id="computer-wins">0</span></p>
+        <p>Ties: <span id="ties">0</span></p>
+    </div>
     <div id="grid">
         {% for i in range(9) %}
             <div class="cell" data-position="{{ i }}"></div>

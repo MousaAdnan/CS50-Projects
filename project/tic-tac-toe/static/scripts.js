@@ -9,11 +9,10 @@ $(document).ready(function () {
             data: JSON.stringify({ position: position }),
             success: function (data) {
                 updateBoard(data.board);
+                updateScores(data.scores);
 
                 if (data.winner) {
-                    setTimeout(() => {
-                        alert(data.winner === "Tie" ? "It's a tie!" : `${data.winner} wins!`);
-                    }, 100);
+                    displayWinner(data.winner);
                 }
             },
             error: function () {
@@ -27,7 +26,7 @@ $(document).ready(function () {
             url: "/reset",
             type: "POST",
             success: function () {
-                $(".cell").text("");
+                $(".cell").text(""); // Clear the board visually
             },
             error: function () {
                 alert("An error occurred while resetting the game.");
@@ -39,5 +38,16 @@ $(document).ready(function () {
         $(".cell").each(function (index) {
             $(this).text(board[index]);
         });
+    }
+
+    function updateScores(scores) {
+        $("#player-wins").text(scores.player);
+        $("#computer-wins").text(scores.computer);
+        $("#ties").text(scores.ties);
+    }
+
+    function displayWinner(winner) {
+        const message = winner === "Tie" ? "It's a tie!" : `${winner} wins!`;
+        $("#winner").text(message);
     }
 });

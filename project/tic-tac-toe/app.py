@@ -10,6 +10,8 @@ def initialize_game():
     session["board"] = [""] * 9  # Empty 3x3 board
     session["turn"] = "X"        # Player starts
     session["winner"] = None
+    if "scores" not in session:
+        session["scores"] = {"player": 0, "computer": 0, "ties": 0}
 
 
 @app.route("/")
@@ -33,20 +35,20 @@ def make_move():
         board[position] = "X"
         winner = check_winner(board)
         if winner:
-            session["winner"] = winner
+            update_score(winner)
             session["board"] = board
-            return jsonify({"winner": winner, "board": board})
+            return jsonify({"winner": winner, "board": board, "scores": session["scores"]})
 
         # Computer's turn
         computer_move()
         winner = check_winner(session["board"])
         if winner:
-            session["winner"] = winner
-            return jsonify({"winner": winner, "board": session["board"]})
+            update_score(winner)
+            return jsonify({"winner": winner, "board": session["board"], "scores": session["scores"]})
 
     # Update the game state
     session["board"] = board
-    return jsonify({"board": board, "winner": None})
+    return jsonify({"board": board, "winner": None, "scores": session["scores"]})
 
 
 @app.route("/reset", methods=["POST"])
@@ -73,6 +75,18 @@ def check_winner(board):
         return "Tie"
 
     return None
+
+
+# Update the scores
+def update_score(winner):
+    scores = session["scores"]
+    if winner == "X":  # Player wins
+        scores["player"] += 1
+    elif winner == "O":  # Computer wins
+        scores["computer"] += 1
+    elif winner == "Tie":  # Game is a tie
+        scores["ties"] += 1
+    session["scores"] = scores  # Save updated scores
 
 
 # Handle the computer's move

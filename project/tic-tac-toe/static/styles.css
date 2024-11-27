@@ -10,6 +10,10 @@ h1 {
     margin: 20px 0;
 }
 
+.scores {
+    margin-bottom: 20px;
+}
+
 #grid {
     display: grid;
     grid-template-columns: repeat(3, 100px);
