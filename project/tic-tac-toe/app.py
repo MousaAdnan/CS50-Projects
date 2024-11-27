@@ -7,52 +7,41 @@ app.secret_key = "secret"  # Needed to use Flask sessions
 # Initialize the board and scores
 def initialize_game():
     session["board"] = [""] * 9
-    session["scores"] = {"player1": 0, "player2": 0, "ties": 0}
     session["turn"] = "X"  # X always starts
 
 @app.route("/")
 def index():
     if "board" not in session:
         initialize_game()
-    return render_template("index.html", scores=session["scores"])
+    return render_template("index.html")
 
 @app.route("/move", methods=["POST"])
 def make_move():
     data = request.json
     position = data["position"]
-    mode = data["mode"]
 
     board = session.get("board", [""] * 9)
     turn = session.get("turn", "X")
 
     # Check if the position is valid
     if board[position] == "":
-        if mode == "computer":
-            board[position] = "X"  # Player move
-            winner = check_winner(board)
+        board[position] = turn  # Place the current player's move
+        winner = check_winner(board)
+        if winner:
+            session["board"] = board  # Persist the updated board
+            return jsonify({"winner": winner, "board": board})
+
+        # Switch turn
+        session["turn"] = "O" if turn == "X" else "X"
+
+        # If it's the computer's turn, let it make a move
+        if session["turn"] == "O":
+            computer_move()
+            winner = check_winner(session["board"])
             if winner:
-                update_score(winner)
-                session["board"] = board
-                return jsonify({"winner": "Player 1" if winner == "X" else "Tie", "board": board})
+                return jsonify({"winner": winner, "board": session["board"]})
 
-            computer_move()  # Computer move
-            winner = check_winner(board)
-            if winner:
-                update_score(winner)
-                session["board"] = board
-                return jsonify({"winner": "Computer" if winner == "O" else "Tie", "board": board})
-
-        else:
-            board[position] = turn  # Player vs Player move
-            winner = check_winner(board)
-            if winner:
-                update_score(winner)
-                session["board"] = board
-                return jsonify({"winner": "Player 1" if winner == "X" else "Player 2" if winner == "O" else "Tie", "board": board})
-
-            session["turn"] = "O" if turn == "X" else "X"  # Switch turn
-
-    # Update the session and return the updated board
+    # Persist the updated board and return it
     session["board"] = board
     return jsonify({"board": board, "winner": None})
 
@@ -61,25 +50,7 @@ def reset():
     initialize_game()
     return jsonify({"success": True})
 
-@app.route("/scores", methods=["GET"])
-def get_scores():
-    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
-    return jsonify(scores)
-
-# Update scores
-def update_score(winner):
-    scores = session.get("scores", {"player1": 0, "player2": 0, "ties": 0})
-
-    if winner == "X":  # Player 1 wins
-        scores["player1"] += 1
-    elif winner == "O":  # Player 2 or Computer wins
-        scores["player2"] += 1
-    elif winner == "Tie":  # It's a tie
-        scores["ties"] += 1
-
-    session["scores"] = scores  # Save the updated scores
-
-# Check if there's a winner or a tie
+# Check if there's a winner
 def check_winner(board):
     winning_combinations = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
@@ -96,34 +67,17 @@ def check_winner(board):
     if "" not in board:  # No empty spaces and no winner
         return "Tie"
 
-    return None  # No winner or tie yet
+    return None  # No winner yet
 
 # Computer makes a move
 def computer_move():
     board = session["board"]
 
-    # Check if the computer can win
-    for i in range(9):
-        if board[i] == "":  # Ensure the position is empty
-            board[i] = "O"  # Temporarily make a move
-            if check_winner(board) == "O":  # Check if this move wins
-                return  # Keep this move if it leads to a win
-            board[i] = ""  # Undo the move
-
-    # Check if the player is about to win, and block
-    for i in range(9):
-        if board[i] == "":  # Ensure the position is empty
-            board[i] = "X"  # Temporarily block the player's move
-            if check_winner(board) == "X":  # Check if this move blocks
-                board[i] = "O"  # Block the player's win
-                return  # End the computer's turn
-            board[i] = ""  # Undo the move
-
-    # Otherwise, choose a random empty position
+    # Randomly choose an empty position
     empty_positions = [i for i, value in enumerate(board) if value == ""]
     if empty_positions:
         position = random.choice(empty_positions)
-        board[position] = "O"  # Make a move in a valid empty position
+        board[position] = "O"  # Computer plays as "O"
 
 if __name__ == "__main__":
     app.run(debug=True)
