@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    // Initialize scores
+    let scores = { player: 0, computer: 0, ties: 0 };
+
     $(".cell").click(function () {
         const position = $(this).data("position");
 
@@ -9,9 +12,9 @@ $(document).ready(function () {
             data: JSON.stringify({ position: position }),
             success: function (data) {
                 updateBoard(data.board);
-                updateScores(data.scores);
 
                 if (data.winner) {
+                    updateScores(data.winner);
                     displayWinner(data.winner);
                 }
             },
@@ -25,10 +28,9 @@ $(document).ready(function () {
         $.ajax({
             url: "/reset",
             type: "POST",
-            success: function (data) {
+            success: function () {
                 $(".cell").text(""); // Clear the board visually
                 clearWinnerMessage(); // Clear the winner message
-                updateScores(data.scores); // Ensure scores are refreshed
             },
             error: function () {
                 alert("An error occurred while resetting the game.");
@@ -42,7 +44,18 @@ $(document).ready(function () {
         });
     }
 
-    function updateScores(scores) {
+    function updateScores(winner) {
+        if (winner === "X") {
+            scores.player += 1; // Player wins
+        } else if (winner === "O") {
+            scores.computer += 1; // Computer wins
+        } else if (winner === "Tie") {
+            scores.ties += 1; // Tie
+        }
+        renderScores();
+    }
+
+    function renderScores() {
         $("#player-wins").text(scores.player);
         $("#computer-wins").text(scores.computer);
         $("#ties").text(scores.ties);
