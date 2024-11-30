@@ -3,7 +3,7 @@ TIC TAC TOE
 #### Description:
 
 rewrite everything
-This project is a web-based implementation of the classic Tic Tac Toe game, designed with a Harvard-inspired theme. The game features a Player vs. Computer mode with an elegant and accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
+This project is a web-based implementation of the classic Tic Tac Toe game. The game features a Player vs. Computer mode with an elegant and accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
 
 The project allows players to:
 1. Compete against the computer.
