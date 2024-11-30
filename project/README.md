@@ -2,9 +2,8 @@ TIC TAC TOE
 #### Video Demo: https://youtu.be/__7S4GjLzPo
 #### Description:
 
-rewrite everything
-This project is a web-based implementation of the classic Tic Tac Toe game.
-The game features a Player vs. Computer mode with an accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
+This project is a web-based classic Tic Tac Toe game.
+The game features a Player vs.Computer mode with an accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
 
 
 >Includes: python, javascript, HTML, CSS, flask
