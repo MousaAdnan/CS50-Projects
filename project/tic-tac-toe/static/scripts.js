@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // Initialize scores
     let scores = { player: 0, computer: 0, ties: 0 };
 
     $(".cell").click(function () {
@@ -29,8 +28,8 @@ $(document).ready(function () {
             url: "/reset",
             type: "POST",
             success: function () {
-                $(".cell").text(""); // Clear the board visually
-                clearWinnerMessage(); // Clear the winner message
+                $(".cell").text("");
+                clearWinnerMessage();
             },
             error: function () {
                 alert("An error occurred while resetting the game.");
@@ -46,11 +45,11 @@ $(document).ready(function () {
 
     function updateScores(winner) {
         if (winner === "X") {
-            scores.player += 1; // Player wins
+            scores.player += 1;
         } else if (winner === "O") {
-            scores.computer += 1; // Computer wins
+            scores.computer += 1;
         } else if (winner === "Tie") {
-            scores.ties += 1; // Tie
+            scores.ties += 1;
         }
         renderScores();
     }
@@ -74,6 +73,6 @@ $(document).ready(function () {
     }
 
     function clearWinnerMessage() {
-        $("#winner-message").text(""); // Clear the message
+        $("#winner-message").text(""); 
     }
 });

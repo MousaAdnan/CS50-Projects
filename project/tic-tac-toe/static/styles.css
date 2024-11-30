@@ -1,6 +1,5 @@
-/* General Body Styling */
 body {
-    font-family: 'Crimson Text', serif; /* Harvard-like serif font */
+    font-family: 'Crimson Text', serif;
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
@@ -12,10 +11,10 @@ body {
     min-height: 100vh;
 }
 
-/* Header Styling */
+
 header {
     text-align: center;
-    background-color: #A41034; /* Harvard Maroon */
+    background-color: #A41034;
     color: #ffffff;
     padding: 20px;
     width: 100%;
@@ -30,16 +29,14 @@ header h1 {
 .subtitle {
     font-size: 1.2rem;
     margin-top: 5px;
-    color: #ffd700; /* Golden accent */
+    color: #ffd700;
 }
 
-/* Main Content Styling */
 main {
     margin-top: 30px;
     text-align: center;
 }
 
-/* Scoreboard Styling */
 .scores {
     display: flex;
     justify-content: center;
@@ -48,7 +45,7 @@ main {
 }
 
 .score {
-    background-color: #A41034; /* Harvard Maroon */
+    background-color: #A41034;
     color: #ffffff;
     border-radius: 5px;
     padding: 15px;
@@ -66,16 +63,14 @@ main {
     font-weight: bold;
 }
 
-/* Winner Message Styling */
 #winner-message {
     font-size: 1.8rem;
     font-weight: bold;
     margin: 20px 0;
-    height: 30px; /* Reserve space even if empty */
-    color: #A41034; /* Harvard Maroon */
+    height: 30px;
+    color: #A41034;
 }
 
-/* Grid Styling */
 #grid {
     display: grid;
     grid-template-columns: repeat(3, 120px);
@@ -99,10 +94,9 @@ main {
 }
 
 .cell:hover {
-    background-color: #ffd700; /* Golden hover effect */
+    background-color: #ffd700;
 }
 
-/* Reset Button Styling */
 button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -119,5 +113,5 @@ button {
 }
 
 button:hover {
-    background-color: #800020; /* Slightly darker maroon on hover */
+    background-color: #800020; 
 }
