@@ -53,6 +53,8 @@ The project allows players to:
 #### Challenges Faced:
 - **Score Management**: For a long time, the score persisted even after the page was refreshed, not allowing a new score to ever take place.
 - **Styling**: Achieving a professional look took multiple iterations for color, spacing, and typography.
+- **Managing Turn Logic**: Preventing bugs such as overwriting moves or skipping turns by validating inputs thoroughly.
+- **Game State Synchronization**: Ensuring the frontend and backend states stay in sync during rapid actions like resets or moves.
 
 ---
 
