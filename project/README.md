@@ -51,14 +51,14 @@ The project allows players to:
 ---
 
 #### Challenges Faced:
-- **Score Management**: Ensuring scores persist across resets while resetting on page refresh required a balance between frontend and backend state management.
-- **Styling**: Achieving a professional and responsive Harvard-inspired design took multiple iterations for color, spacing, and typography.
+- **Score Management**: For a long time, the score persisted even after the page was refreshed, not allowing a new score to ever take place.
+- **Styling**: Achieving a professional look took multiple iterations for color, spacing, and typography.
 
 ---
 
 #### Future Enhancements:
 - Add a "Player vs. Player" mode for multiplayer gameplay.
-- Improve the computer’s AI logic to make it more competitive.
+- Improve the computer’s logic to make it more competitive.
 - Introduce animations and sound effects for a richer user experience.
 
 ---
