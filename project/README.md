@@ -3,7 +3,11 @@ TIC TAC TOE
 #### Description:
 
 rewrite everything
-This project is a web-based implementation of the classic Tic Tac Toe game. The game features a Player vs. Computer mode with an elegant and accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
+This project is a web-based implementation of the classic Tic Tac Toe game.
+The game features a Player vs. Computer mode with an accessible user interface that uses Harvard’s maroon and gold color scheme for a polished look.
+
+
+>Includes: python, javascript, HTML, CSS, flask
 
 The project allows players to:
 1. Compete against the computer.
@@ -11,15 +15,13 @@ The project allows players to:
 3. Reset the game board without resetting the scores.
 4. Experience a responsive and visually appealing design.
 
-This project demonstrates the integration of frontend and backend technologies to deliver a fully functional and interactive web application.
-
 ---
 
 #### Features:
 - **Player vs. Computer Gameplay**: The user plays as "X," while the computer plays as "O." The computer is programmed with basic logic to block the user or take a winning move when possible.
-- **Dynamic Scoreboard**: Displays the number of Player Wins, Computer Wins, and Ties, which persist across games until the page is refreshed.
+- **Dynamic Scoreboard**: Displays the number of Player Wins, Computer Wins, and Ties.
 - **Reset Functionality**: Resets the game board and clears the "Winner" message while keeping the scoreboard intact.
-- **Stylized Harvard Theme**: A clean and professional UI inspired by Harvard’s maroon and gold branding.
+- **Harvard Theme**: A clean UI inspired by Harvard’s maroon and gold branding.
 - **Responsive Design**: Optimized for different screen sizes and devices.
 
 ---
@@ -28,15 +30,14 @@ This project demonstrates the integration of frontend and backend technologies t
 - **Python**: Backend logic using Flask.
 - **HTML/CSS**: For creating the user interface, styled with a Harvard-inspired design.
 - **JavaScript**: Handles user interactions, updates the game state dynamically, and manages the scoreboard in the frontend.
-- **AJAX**: Ensures seamless communication between the frontend and backend.
-- **Flask**: A lightweight Python web framework for handling requests and managing game logic.
+- **Flask**: A Python web framework for handling requests and managing game logic.
 
 ---
 
 #### Design Choices:
-- **Harvard Theme**: The maroon (`#A41034`) and gold (`#FFD700`) color scheme was chosen to provide an elegant and distinctive look, aligning with Harvard’s branding.
-- **Frontend-Managed Scores**: By storing scores in JavaScript, we ensured scores persist across games but reset upon page refresh, improving user experience.
-- **Simple AI Logic**: The computer prioritizes blocking the player and winning opportunities, creating a challenging yet fun gameplay experience.
+- **Harvard Theme**: The maroon (`#A41034`) and gold (`#FFD700`) color scheme was chosen to provide an elegant look, aligning with Harvard’s branding.
+- **Frontend-Managed Scores**: By storing scores in JavaScript, we ensured scores persist across games but reset upon page refresh.
+- **Simple Computer Logic**: The computer prioritizes blocking the player and winning opportunities, creating a challenging yet fun gameplay experience.
 
 ---
 
