@@ -1,5 +1,5 @@
 TIC TAC TOE
-#### Video Demo: https://youtu.be/__7S4GjLzPo
+
 #### Description:
 
 This project is a web-based classic Tic Tac Toe game.
